@@ -12,7 +12,13 @@
 </head>
 
 <body>
-  <a class="github-link small" href="https://github.com/pianomister/diffsite">visit project on github</a>
+  <p class="github-link small">
+    <a id="toggle-dark-mode">
+      toggle dark mode
+    </a>
+    <a href="https://github.com/pianomister/diffsite">
+      visit project on github</a>
+  </p>
   <h1>diff<span>site</span></h1>
   <p class="intro">Visually compare two versions of a website with side-by-side matching, or overlay using opacity
     (onion),
@@ -35,7 +41,7 @@
       <label>Viewport width</label>
       <select id="select-device">
         <option value="320">iPhone 5/SE</option>
-        <option value="375">iPhone 6/7/8/X/XS</option>
+        <option value="375" selected>iPhone 6/7/8/X/XS</option>
         <option value="414">iPhone 6/7/8 Plus</option>
         <option value="768">iPad</option>
       </select>
@@ -69,19 +75,22 @@
     </div>
   </section>
 
-  <main>
+  <main data-sticky-container>
 
-    <section class="shift-section">
-      <button class="icon-button icon-button--shade" id="button-shift-up-left">
-        <i class="material-icons">arrow_upward</i>
-      </button>
-      <div class="shift-input">
-        <input id="shift-left" type="text" value="0">
-        <span>px</span>
+    <section class="shift-section-wrapper">
+      <div class="shift-section">
+
+        <button class="icon-button icon-button--shade" id="button-shift-up-left">
+          <i class="material-icons">arrow_upward</i>
+        </button>
+        <div class="shift-input">
+          <input id="shift-left" type="text" value="0">
+          <span>px</span>
+        </div>
+        <button class="icon-button icon-button--shade" id="button-shift-down-left">
+          <i class="material-icons">arrow_downward</i>
+        </button>
       </div>
-      <button class="icon-button icon-button--shade" id="button-shift-down-left">
-        <i class="material-icons">arrow_downward</i>
-      </button>
     </section>
 
     <section class="diff-container" id="diff-container">
@@ -96,17 +105,19 @@
       </div>
     </section>
 
-    <section class="shift-section">
-      <button class="icon-button icon-button--shade" id="button-shift-up-right">
-        <i class="material-icons">arrow_upward</i>
-      </button>
-      <div class="shift-input">
-        <input id="shift-right" type="text" value="0">
-        <span>px</span>
+    <section class="shift-section-wrapper">
+      <div class="shift-section">
+        <button class="icon-button icon-button--shade" id="button-shift-up-right">
+          <i class="material-icons">arrow_upward</i>
+        </button>
+        <div class="shift-input">
+          <input id="shift-right" type="text" value="0">
+          <span>px</span>
+        </div>
+        <button class="icon-button icon-button--shade" id="button-shift-down-right">
+          <i class="material-icons">arrow_downward</i>
+        </button>
       </div>
-      <button class="icon-button icon-button--shade" id="button-shift-down-right">
-        <i class="material-icons">arrow_downward</i>
-      </button>
     </section>
 
   </main>

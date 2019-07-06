@@ -1,11 +1,12 @@
 import '../styles/index.scss';
 import {debounce, enhanceUrl} from './helpers';
 import {state, cssVar} from './state';
+import * as Sticky from 'sticky-js';
 
-
-
-
+// REFERENCES
 const $container = document.getElementById('diff-container');
+const $inputLeft = document.getElementById('input-url-left');
+const $inputRight = document.getElementById('input-url-right');
 const $left = document.getElementById('frame-left');
 const $right = document.getElementById('frame-right');
 const $contentLeft = document.getElementById('content-left');
@@ -16,7 +17,16 @@ const $swipeHandle = document.getElementById('compare-handle');
 const $groupOverlay = document.getElementById('group-overlay');
 const $groupOpacity = document.getElementById('group-opacity');
 
-
+// STICKY
+const stickyShift = new Sticky('.shift-section', {
+    wrap: true,
+    marginTop: 200
+});
+const stickyConfig = new Sticky('.config-section', {
+    wrap: true,
+    marginTop: 0,
+    stickyClass: 'config-section--sticky'
+});
 
 /**
  * Swipe handle
@@ -58,25 +68,31 @@ function swipeHandleMove(e) {
 
 
 // URL INPUTS
-document.getElementById('input-url-left').addEventListener('input', (event) => {
+$inputLeft.addEventListener('input', (event) => {
     debounce(() => {
         event.target.value = enhanceUrl(event.target.value);
         $contentLeft.src = event.target.value;
     }, 700)();
 });
 
-document.getElementById('input-url-right').addEventListener('input', (event) => {
+$inputRight.addEventListener('input', (event) => {
     debounce(() => {
         event.target.value = enhanceUrl(event.target.value);
         $contentRight.src = event.target.value;
     }, 700)();
 });
 
+// DARK MODE
+document.getElementById('toggle-dark-mode').addEventListener('click', () => {
+    document.body.classList.toggle('theme-dark');
+});
 
+// CONFIG TOGGLES
 document.getElementById('mode-side-by-side').addEventListener('click', () => {
     $container.classList.remove('diff-container--mode-overlay');
     $groupOverlay.classList.add('disabled');
     $groupOpacity.classList.add('disabled');
+    stickyConfig.update();
 });
 
 document.getElementById('mode-overlay').addEventListener('click', () => {
@@ -84,6 +100,7 @@ document.getElementById('mode-overlay').addEventListener('click', () => {
     $groupOverlay.classList.remove('disabled');
     if (!$container.classList.contains('diff-container--mode-swipe')) {
         $groupOpacity.classList.remove('disabled');
+        stickyConfig.update();
     }
 });
 
@@ -107,6 +124,7 @@ document.getElementById('mode-onion').addEventListener('click', () => {
 
 document.getElementById('select-device').addEventListener('change', (event) => {
     cssVar('diff-site-width', event.target.value);
+    stickyConfig.update();
 });
 
 document.getElementById('select-opacity').addEventListener('input', (event) => {
@@ -129,7 +147,7 @@ document.getElementById('button-shift-down-left').addEventListener('click', () =
     updateShiftValue($shiftLeft, 'diff-site-shift-left');
 });
 
-document.getElementById('shift-left').addEventListener('input', () => {
+$shiftLeft.addEventListener('input', () => {
     cssVar('diff-site-shift-left', parseInt($shiftLeft.value) || 0);
 });
 
@@ -143,6 +161,10 @@ document.getElementById('button-shift-down-right').addEventListener('click', () 
     updateShiftValue($shiftRight, 'diff-site-shift-right');
 });
 
-document.getElementById('shift-right').addEventListener('input', () => {
+$shiftRight.addEventListener('input', () => {
     cssVar('diff-site-shift-right', parseInt($shiftRight.value) || 0);
 });
+
+// update URLs on site load
+$inputLeft.dispatchEvent(new Event('input'));
+$inputRight.dispatchEvent(new Event('input'));

@@ -6,7 +6,7 @@
   --shade2: #d0d0d0;
 
   // configurable variables
-  --diff-site-width: 400;
+  --diff-site-width: 375;
   --diff-site-height: 15000;
   --diff-site-shift-left: 0;
   --diff-site-shift-right: 0;
@@ -47,6 +47,7 @@ strong {
 
 a {
   color: var(--primary);
+  cursor: pointer;
 }
 
 .small {
@@ -63,9 +64,10 @@ p {
 }
 
 .github-link {
-  display: block;
-  text-align: right;
-  margin: 2rem 2rem 0 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 2rem 2rem 0;
 }
 
 .url-inputs {
@@ -90,19 +92,29 @@ p {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin: 1rem auto;
+  margin: 1rem auto 0;
   padding: 1rem;
   background: var(--shade1);
+
+  &--sticky {
+      box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
+      margin: 0;
+      z-index: 10;
+  }
+}
+
+.shift-section-wrapper {
+    padding-top: 20rem;
 }
 
 .shift-section {
   display: flex;
   flex-flow: column nowrap;
   width: 3.5rem;
-  margin-top: 2rem;
   border-radius: 0.5rem;
   overflow: hidden;
   background: var(--shade2);
+  z-index: 10;
 
   .shift-input {
     display: grid;

@@ -3,7 +3,7 @@
   display: block;
   width: calc(var(--diff-site-width) * 2px + 30px);
   height: calc(var(--diff-site-height) * 1px);
-  margin: 2rem 1rem;
+  margin: 3rem 1rem;
   transition: width $transition-duration;
 
   &--mode-overlay {
