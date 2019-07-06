@@ -8,7 +8,7 @@ module.exports = {
     app: Path.resolve(__dirname, '../src/scripts/index.js')
   },
   output: {
-    path: Path.join(__dirname, '../build'),
+    path: Path.join(__dirname, '../docs'),
     filename: 'js/[name].js'
   },
   optimization: {
