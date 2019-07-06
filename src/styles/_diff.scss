@@ -1,0 +1,104 @@
+.diff-container {
+  position: relative;
+  display: block;
+  width: calc(var(--diff-site-width) * 2px + 30px);
+  height: calc(var(--diff-site-height) * 1px);
+  margin: 2rem auto;
+  transition: width $transition-duration;
+
+  &--mode-overlay {
+    width: calc(var(--diff-site-width) * 1px);
+
+    .diff-frame {
+      pointer-events: none;
+
+      &--left {
+        box-shadow: none;
+      }
+    }
+
+    &:not(.diff-container--mode-swipe) {
+      .diff-frame {
+        &--right {
+          opacity: var(--diff-site-opacity-right);
+        }
+
+        &--mode-blend {
+          mix-blend-mode: difference;
+        }
+      }
+    }
+  }
+
+  &--mode-swipe.diff-container--mode-overlay {
+    .swipe-handle {
+      display: block;
+    }
+
+    .diff-frame--left {
+      z-index: 5;
+      width: calc(var(--swipe-handle-position) * 1px);
+      transition: none;
+    }
+  }
+}
+
+.diff-frame {
+  position: absolute;
+  top: 0;
+  width: calc(var(--diff-site-width) * 1px);
+  height: calc(var(--diff-site-height) * 1px);
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  background: var(--shade1);
+  transition: width $transition-duration;
+
+  &--left {
+    left: 0;
+
+    .diff-content {
+      top: calc(var(--diff-site-shift-left) * 1px);
+    }
+  }
+
+  &--right {
+    right: 0;
+
+    .diff-content {
+      top: calc(var(--diff-site-shift-right) * 1px);
+    }
+  }
+}
+
+.diff-content {
+  position: relative;
+  width: calc(var(--diff-site-width) * 1px);
+  height: 100%;
+  border: 0;
+  transition: width $transition-duration;
+}
+
+.swipe-handle {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  left: calc(var(--swipe-handle-position) * 1px - 15px);
+  width: 30px;
+  height: calc(var(--diff-site-height) * 1px);
+  opacity: 0.7;
+  cursor: ew-resize;
+
+  &__line {
+    width: 1px;
+    height: 100%;
+    margin: 0 auto;
+    background: #f00;
+  }
+}
+
+.diff-site-shift-left-value {
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+  background: yellow;
+}
