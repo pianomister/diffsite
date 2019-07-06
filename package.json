@@ -48,6 +48,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
     "core-js": "^3.0.1",
-    "sticky-js": "^1.2.0"
+    "sticky-js": "^1.2.0",
+    "validator": "^11.1.0"
   }
 }

@@ -48,6 +48,13 @@ strong {
 a {
   color: var(--primary);
   cursor: pointer;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    opacity: 0.8;
+  }
 }
 
 .small {
@@ -78,9 +85,41 @@ p {
   max-width: 800px;
   margin: 0 auto;
 
-  span {
-    padding: 0 1em;
+  span.mode-switch {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border-radius: 50%;
     font-weight: 900;
+    cursor: pointer;
+    transition: background-color $transition-duration;
+
+    &::after {
+      content: "vs.";
+    }
+
+    &:hover {
+      background-color: var(--shade1);
+
+      &::after {
+        content: "⚡";
+      }
+    }
+
+    &--amp {
+      &,
+      &:hover {
+        background-color: var(--primary);
+      }
+
+      &::after {
+        content: "⚡";
+      }
+    }
   }
 
   .label-group {
@@ -97,14 +136,14 @@ p {
   background: var(--shade1);
 
   &--sticky {
-      box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
-      margin: 0;
-      z-index: 10;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    margin: 0;
+    z-index: 10;
   }
 }
 
 .shift-section-wrapper {
-    padding-top: 20rem;
+  padding-top: 20rem;
 }
 
 .shift-section {

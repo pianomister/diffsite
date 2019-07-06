@@ -1,7 +1,9 @@
 import '../styles/index.scss';
-import {debounce, enhanceUrl} from './helpers';
-import {state, cssVar} from './state';
+import { debounce, enhanceUrl } from './helpers';
+import { state, cssVar } from './state';
 import * as Sticky from 'sticky-js';
+import isURL from 'validator/lib/isURL';
+import { getAlternativeURL } from './amp-canonical-detector';
 
 // REFERENCES
 const $container = document.getElementById('diff-container');
@@ -82,6 +84,28 @@ $inputRight.addEventListener('input', (event) => {
     }, 700)();
 });
 
+document.getElementById('mode-amp-detect').addEventListener('click', function () {
+    var checkAmp = this.classList.toggle('mode-switch--amp');
+    if (checkAmp && (isURL($inputLeft.value) || isURL($inputRight.value))) {
+
+        const value = isURL($inputLeft.value) ? $inputLeft.value : $inputRight.value;
+        const target = isURL($inputLeft.value) ? $inputRight : $inputLeft;
+
+        getAlternativeURL(value, 'amp-html')
+            .then(url => {
+                target.value = url;
+                target.dispatchEvent(new Event('input'));
+            })
+            .catch((error) => {
+                return getAlternativeURL(value, 'canonical');
+            })
+            .then(url => {
+                target.value = url;
+                target.dispatchEvent(new Event('input'));
+            });
+    }
+});
+
 // DARK MODE
 document.getElementById('toggle-dark-mode').addEventListener('click', () => {
     document.body.classList.toggle('theme-dark');
@@ -133,7 +157,7 @@ document.getElementById('select-opacity').addEventListener('input', (event) => {
 
 
 // SHIFT BUTTONS
-const updateShiftValue = function($target, cssVarKey) {
+const updateShiftValue = function ($target, cssVarKey) {
     $target.value = cssVar(cssVarKey);
 };
 
