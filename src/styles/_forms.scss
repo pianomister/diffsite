@@ -72,12 +72,12 @@ label {
       box-shadow 0.15s ease-out;
 
     &:first-of-type {
-      border-radius: 6px 0 0 6px;
+      border-radius: 0.5rem 0 0 0.5rem;
       border-right: none;
     }
 
     &:last-of-type {
-      border-radius: 0 6px 6px 0;
+      border-radius: 0 0.5rem 0.5rem 0;
       border-left: none;
     }
   }
@@ -93,6 +93,35 @@ label {
     color: var(--background);
     border-color: var(--primary);
     z-index: 1;
+  }
+}
+
+// icon button
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  background: var(--primary);
+  color: var(--background);
+
+  i {
+    flex: 1 0 0%;
+    font-size: 1.5rem;
+    transition: background-color $transition-duration, color $transition-duration;
+  }
+
+  &--shade {
+    background: var(--shade2);
+    color: var(--color);
+
+    &:hover i,
+    &:active i {
+      color: var(--primary);
+    }
   }
 }
 

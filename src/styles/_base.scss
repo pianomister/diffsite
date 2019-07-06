@@ -46,11 +46,11 @@ strong {
 }
 
 a {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 .small {
-    font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 p {
@@ -63,9 +63,9 @@ p {
 }
 
 .github-link {
-    display: block;
-    text-align: right;
-    margin: 2rem 2rem 0 0;
+  display: block;
+  text-align: right;
+  margin: 2rem 2rem 0 0;
 }
 
 .url-inputs {
@@ -93,4 +93,36 @@ p {
   margin: 1rem auto;
   padding: 1rem;
   background: var(--shade1);
+}
+
+.shift-section {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 3.5rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--shade2);
+
+  .shift-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.8rem;
+  }
+
+  input {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    font-size: 0.8rem;
+    text-align: right;
+  }
+}
+
+main {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
 }

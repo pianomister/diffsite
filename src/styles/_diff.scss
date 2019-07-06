@@ -3,7 +3,7 @@
   display: block;
   width: calc(var(--diff-site-width) * 2px + 30px);
   height: calc(var(--diff-site-height) * 1px);
-  margin: 2rem auto;
+  margin: 2rem 1rem;
   transition: width $transition-duration;
 
   &--mode-overlay {
@@ -94,11 +94,4 @@
     margin: 0 auto;
     background: #f00;
   }
-}
-
-.diff-site-shift-left-value {
-  display: inline-block;
-  width: 30px;
-  height: 20px;
-  background: yellow;
 }

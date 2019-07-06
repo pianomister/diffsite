@@ -116,7 +116,7 @@ document.getElementById('select-opacity').addEventListener('input', (event) => {
 
 // SHIFT BUTTONS
 const updateShiftValue = function($target, cssVarKey) {
-    $target.textContent = `${cssVar(cssVarKey)}px`;
+    $target.value = cssVar(cssVarKey);
 };
 
 document.getElementById('button-shift-up-left').addEventListener('click', () => {
@@ -129,9 +129,8 @@ document.getElementById('button-shift-down-left').addEventListener('click', () =
     updateShiftValue($shiftLeft, 'diff-site-shift-left');
 });
 
-document.getElementById('button-shift-reset-left').addEventListener('click', () => {
-    cssVar('diff-site-shift-left', 0);
-    updateShiftValue($shiftLeft, 'diff-site-shift-left');
+document.getElementById('shift-left').addEventListener('input', () => {
+    cssVar('diff-site-shift-left', parseInt($shiftLeft.value) || 0);
 });
 
 document.getElementById('button-shift-up-right').addEventListener('click', () => {
@@ -144,7 +143,6 @@ document.getElementById('button-shift-down-right').addEventListener('click', () 
     updateShiftValue($shiftRight, 'diff-site-shift-right');
 });
 
-document.getElementById('button-shift-reset-right').addEventListener('click', () => {
-    cssVar('diff-site-shift-right', 0);
-    updateShiftValue($shiftRight, 'diff-site-shift-right');
+document.getElementById('shift-right').addEventListener('input', () => {
+    cssVar('diff-site-shift-right', parseInt($shiftRight.value) || 0);
 });
