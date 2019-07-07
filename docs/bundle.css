@@ -26,7 +26,8 @@ body {
   font-size: 1.2rem;
   font-family: "Noto Sans SC", sans-serif;
   background-color: var(--background);
-  color: var(--color); }
+  color: var(--color);
+  transition: color 0.2s, background-color 0.2s; }
 
 h1 {
   margin: 2em 2rem 1em;
@@ -102,7 +103,7 @@ p {
   padding: 1rem;
   background: var(--shade1); }
   .config-section--sticky {
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
     margin: 0;
     z-index: 10; }
 
@@ -337,7 +338,7 @@ input[type="range"]:focus::-ms-fill-upper {
   top: 0;
   width: calc(var(--diff-site-width) * 1px);
   height: calc(var(--diff-site-height) * 1px);
-  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
   overflow: hidden;
   background: var(--shade1);
   transition: width 0.2s; }
