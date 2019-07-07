@@ -72,15 +72,23 @@ function swipeHandleMove(e) {
 // URL INPUTS
 $inputLeft.addEventListener('input', (event) => {
     debounce(() => {
-        event.target.value = enhanceUrl(event.target.value);
-        $contentLeft.src = event.target.value;
+        let url = event.target.value;
+        url = enhanceUrl(url);
+        if (isURL(url)) {
+            event.target.value = url;
+            $contentLeft.src = url;
+        }
     }, 700)();
 });
 
 $inputRight.addEventListener('input', (event) => {
     debounce(() => {
-        event.target.value = enhanceUrl(event.target.value);
-        $contentRight.src = event.target.value;
+        let url = event.target.value;
+        url = enhanceUrl(url);
+        if (isURL(url)) {
+            event.target.value = url;
+            $contentRight.src = url;
+        }
     }, 700)();
 });
 
@@ -96,12 +104,16 @@ document.getElementById('mode-amp-detect').addEventListener('click', function ()
                 target.value = url;
                 target.dispatchEvent(new Event('input'));
             })
-            .catch((error) => {
+            .catch(error => {
                 return getAlternativeURL(value, 'canonical');
             })
             .then(url => {
                 target.value = url;
                 target.dispatchEvent(new Event('input'));
+            })
+            .catch(error => {
+                this.classList.remove('mode-switch--amp');
+                alert('AMP or canonical pendant was not found.');
             });
     }
 });

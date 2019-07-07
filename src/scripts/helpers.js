@@ -32,6 +32,7 @@ export function debounce(func, threshold, execAsap) {
  */
 export function enhanceUrl(url) {
     if (!url) return url;
-    if (url.indexOf('http') != 0) url = 'http://' + url;
+    if (url.indexOf('http') != 0) url = 'https://' + url;
+    if (url.indexOf('https') != 0) url = url.replace('http://', 'https://');
     return url;
 };
