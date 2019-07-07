@@ -12,8 +12,6 @@ Inspired by
 Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).
 
 ### Wishlist
-- Auto-detect AMP/canonical page for one URL
-- Sharable link to diffsite containing compared site URLs
 - Help / instructions
 
 ### Installation
