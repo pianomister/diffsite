@@ -1,5 +1,5 @@
 import '../styles/index.scss';
-import { debounce, enhanceUrl } from './helpers';
+import { debounce, enhanceUrl, getParameterByName } from './helpers';
 import { state, cssVar } from './state';
 import * as Sticky from 'sticky-js';
 import isURL from 'validator/lib/isURL';
@@ -70,6 +70,16 @@ function swipeHandleMove(e) {
 
 
 // URL INPUTS
+const setShareableURL = function () {
+    const url1 = encodeURIComponent($inputLeft.value);
+    const url2 = encodeURIComponent($inputRight.value);
+    window.history.pushState(
+        {},
+        document.title,
+        `${location.protocol}//${location.host}${location.pathname}?url1=${url1}&url2=${url2}`
+    );
+};
+
 $inputLeft.addEventListener('input', (event) => {
     debounce(() => {
         let url = event.target.value;
@@ -77,6 +87,7 @@ $inputLeft.addEventListener('input', (event) => {
         if (isURL(url)) {
             event.target.value = url;
             $contentLeft.src = url;
+            setShareableURL();
         }
     }, 700)();
 });
@@ -88,10 +99,12 @@ $inputRight.addEventListener('input', (event) => {
         if (isURL(url)) {
             event.target.value = url;
             $contentRight.src = url;
+            setShareableURL();
         }
     }, 700)();
 });
 
+// AMP DETECTION
 document.getElementById('mode-amp-detect').addEventListener('click', function () {
     var checkAmp = this.classList.toggle('mode-switch--amp');
     if (checkAmp && (isURL($inputLeft.value) || isURL($inputRight.value))) {
@@ -103,6 +116,7 @@ document.getElementById('mode-amp-detect').addEventListener('click', function ()
             .then(url => {
                 target.value = url;
                 target.dispatchEvent(new Event('input'));
+                this.classList.remove('mode-switch--amp');
             })
             .catch(error => {
                 return getAlternativeURL(value, 'canonical');
@@ -110,6 +124,7 @@ document.getElementById('mode-amp-detect').addEventListener('click', function ()
             .then(url => {
                 target.value = url;
                 target.dispatchEvent(new Event('input'));
+                this.classList.remove('mode-switch--amp');
             })
             .catch(error => {
                 this.classList.remove('mode-switch--amp');
@@ -202,5 +217,10 @@ $shiftRight.addEventListener('input', () => {
 });
 
 // update URLs on site load
+const url1 = getParameterByName('url1');
+const url2 = getParameterByName('url2');
+if (url1) $inputLeft.value = url1;
+if (url2) $inputRight.value = url2;
+
 $inputLeft.dispatchEvent(new Event('input'));
 $inputRight.dispatchEvent(new Event('input'));
