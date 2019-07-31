@@ -7,6 +7,7 @@
 
   // configurable variables
   --diff-site-width: 375;
+  --diff-site-device-height: 667;
   --diff-site-height: 15000;
   --diff-site-shift-left: 0;
   --diff-site-shift-right: 0;
@@ -162,7 +163,8 @@ p {
 .shift-section {
   display: flex;
   flex-flow: column nowrap;
-  width: 3.5rem;
+  align-items: center;
+  width: 4rem;
   border-radius: 0.5rem;
   overflow: hidden;
   background: var(--shade2);
@@ -176,11 +178,16 @@ p {
 
   input {
     display: inline-block;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     padding: 0;
-    border: none;
     font-size: 0.8rem;
     text-align: right;
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  button {
+    cursor: pointer;
   }
 }
 
