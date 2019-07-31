@@ -8,6 +8,13 @@ Inspired by
 - https://antoinebr.github.io/compareAMP/
 - https://help.github.com/en/articles/rendering-and-diffing-images#viewing-differences
 
+## Feature wishlist / backlog
+- dynamic device selection list configured in JS constant
+- show above-the-fold line for devices
+- custom styling for device selection dropdown
+- fix min width of comparison area
+- less spacing overall to save space for comparison
+
 ## Development
 Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).
 

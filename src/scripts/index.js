@@ -8,6 +8,7 @@ import { getAlternativeURL } from './amp-canonical-detector';
 const $container = document.getElementById('diff-container');
 const $inputLeft = document.getElementById('input-url-left');
 const $inputRight = document.getElementById('input-url-right');
+const $ampDetectButton = document.getElementById('mode-amp-detect');
 const $left = document.getElementById('frame-left');
 const $right = document.getElementById('frame-right');
 const $contentLeft = document.getElementById('content-left');
@@ -104,7 +105,7 @@ $inputRight.addEventListener('input', (event) => {
 });
 
 // AMP DETECTION
-document.getElementById('mode-amp-detect').addEventListener('click', function () {
+$ampDetectButton.addEventListener('click', function () {
     var checkAmp = this.classList.toggle('mode-switch--amp');
     if (checkAmp && (isValidUrl($inputLeft.value) || isValidUrl($inputRight.value))) {
 
@@ -220,6 +221,10 @@ const url1 = getParameterByName('url1');
 const url2 = getParameterByName('url2');
 if (url1) $inputLeft.value = url1;
 if (url2) $inputRight.value = url2;
+
+// auto-detect AMP/canonical with getamp parameter
+const getAmp = getParameterByName('getamp');
+if (getAmp) $ampDetectButton.click();
 
 $inputLeft.dispatchEvent(new Event('input'));
 $inputRight.dispatchEvent(new Event('input'));
