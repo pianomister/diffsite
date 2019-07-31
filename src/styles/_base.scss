@@ -31,7 +31,7 @@ body {
 }
 
 h1 {
-  margin: 2em 2rem 1em;
+  margin: 1em 2rem .5em;
   font-size: 3rem;
   font-weight: 900;
   text-align: center;
@@ -55,6 +55,18 @@ a {
   &:active,
   &:focus {
     opacity: 0.8;
+  }
+
+  &.icon-link {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    i {
+      font-size: 1.5em;
+      margin-right: .25em;
+      margin-top: .1em;
+    }
   }
 }
 
@@ -133,7 +145,7 @@ p {
   flex-flow: row wrap;
   justify-content: center;
   margin: 1rem auto 0;
-  padding: 1rem;
+  padding: 0 1rem;
   background: var(--shade1);
 
   &--sticky {
@@ -177,4 +189,6 @@ main {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
+  // secure min width for comparison section to prevent overlapping
+  min-width: calc(var(--diff-site-width) * 2 * 1px + 30px + 10rem);
 }
