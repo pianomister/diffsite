@@ -1,8 +1,7 @@
 import '../styles/index.scss';
-import { debounce, enhanceUrl, getParameterByName } from './helpers';
+import { debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
 import { state, cssVar } from './state';
 import * as Sticky from 'sticky-js';
-import isURL from 'validator/lib/isURL';
 import { getAlternativeURL } from './amp-canonical-detector';
 
 // REFERENCES
@@ -84,7 +83,7 @@ $inputLeft.addEventListener('input', (event) => {
     debounce(() => {
         let url = event.target.value;
         url = enhanceUrl(url);
-        if (isURL(url)) {
+        if (isValidUrl(url)) {
             event.target.value = url;
             $contentLeft.src = url;
             setShareableURL();
@@ -96,7 +95,7 @@ $inputRight.addEventListener('input', (event) => {
     debounce(() => {
         let url = event.target.value;
         url = enhanceUrl(url);
-        if (isURL(url)) {
+        if (isValidUrl(url)) {
             event.target.value = url;
             $contentRight.src = url;
             setShareableURL();
@@ -107,10 +106,10 @@ $inputRight.addEventListener('input', (event) => {
 // AMP DETECTION
 document.getElementById('mode-amp-detect').addEventListener('click', function () {
     var checkAmp = this.classList.toggle('mode-switch--amp');
-    if (checkAmp && (isURL($inputLeft.value) || isURL($inputRight.value))) {
+    if (checkAmp && (isValidUrl($inputLeft.value) || isValidUrl($inputRight.value))) {
 
-        const value = isURL($inputLeft.value) ? $inputLeft.value : $inputRight.value;
-        const target = isURL($inputLeft.value) ? $inputRight : $inputLeft;
+        const value = isValidUrl($inputLeft.value) ? $inputLeft.value : $inputRight.value;
+        const target = isValidUrl($inputLeft.value) ? $inputRight : $inputLeft;
 
         getAlternativeURL(value, 'amp-html')
             .then(url => {

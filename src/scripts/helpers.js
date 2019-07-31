@@ -1,3 +1,5 @@
+import isURL from 'validator/lib/isURL';
+
 /**
  * Generic debounce for events
  * 
@@ -33,9 +35,18 @@ export function debounce(func, threshold, execAsap) {
 export function enhanceUrl(url) {
     if (!url) return url;
     if (url.indexOf('http') != 0) url = 'https://' + url;
-    if (url.indexOf('https') != 0) url = url.replace('http://', 'https://');
     return url;
 };
+
+/**
+ * Check if a given URL is considered valid.
+ * 
+ * @param {string} url URL to check for validity
+ * @author https://glitch.com/edit/#!/amp-visual-compare
+ */
+export function isValidUrl(url) {
+    return url.indexOf('localhost') != -1 || url.indexOf('http://localhost') === 0 || isURL(url);
+}
 
 /**
  * Extracts value from URL query parameter.
