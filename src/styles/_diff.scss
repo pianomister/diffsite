@@ -38,6 +38,7 @@
     .diff-frame--left {
       z-index: 5;
       width: calc(var(--swipe-handle-position) * 1px);
+      overflow: hidden;
       transition: none;
     }
   }
@@ -49,7 +50,6 @@
   width: calc(var(--diff-site-width) * 1px);
   height: calc(var(--diff-site-height) * 1px);
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-  overflow: hidden;
   background: var(--shade1);
   transition: width $transition-duration;
 
@@ -92,6 +92,17 @@
     width: 1px;
     height: 100%;
     margin: 0 auto;
-    background: #f00;
+    background-color: var(--alert);
   }
+}
+
+.device-height-line {
+  position: absolute;
+  top: calc(var(--diff-site-device-height) * 1px);
+  left: -10px;
+  width: calc(var(--diff-site-width) * 1px + 20px);
+  height: 1px;
+  border: 0;
+  background-color: var(--alert);
+  transition: top $transition-duration;
 }

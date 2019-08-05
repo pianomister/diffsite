@@ -4,6 +4,7 @@
   --color: #111;
   --shade1: #e8e8e8;
   --shade2: #d0d0d0;
+  --alert: #f00;
 
   // configurable variables
   --diff-site-width: 375;
@@ -80,7 +81,7 @@ p {
 
   &.intro {
     max-width: 700px;
-    margin: 2em auto;
+    margin: 1em auto;
   }
 }
 

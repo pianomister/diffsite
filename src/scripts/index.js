@@ -1,4 +1,6 @@
 import '../styles/index.scss';
+
+import { DEVICES } from './constants';
 import { debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
 import { state, cssVar } from './state';
 import * as Sticky from 'sticky-js';
@@ -9,6 +11,7 @@ const $container = document.getElementById('diff-container');
 const $inputLeft = document.getElementById('input-url-left');
 const $inputRight = document.getElementById('input-url-right');
 const $ampDetectButton = document.getElementById('mode-amp-detect');
+const $selectDevice = document.getElementById('select-device');
 const $left = document.getElementById('frame-left');
 const $right = document.getElementById('frame-right');
 const $contentLeft = document.getElementById('content-left');
@@ -173,15 +176,31 @@ document.getElementById('mode-onion').addEventListener('click', () => {
     $groupOpacity.classList.remove('disabled');
 });
 
-document.getElementById('select-device').addEventListener('change', (event) => {
-    cssVar('diff-site-width', event.target.value);
+// DEVICE SELECT DROPDOWN
+$selectDevice.options.length = 0;
+while ($selectDevice.firstChild) {
+    $selectDevice.removeChild($selectDevice.firstChild);
+}
+
+for (let i = 0; i < DEVICES.length; i++) {
+    $selectDevice.options[$selectDevice.options.length] = new Option(
+        DEVICES[i].name,
+        i,
+        DEVICES[i].name === 'iPhone 6/7/8',
+        DEVICES[i].name === 'iPhone 6/7/8'
+    );
+}
+
+$selectDevice.addEventListener('change', (event) => {
+    const index = event.target.value;
+    cssVar('diff-site-width', DEVICES[index].width);
+    cssVar('diff-site-device-height', DEVICES[index].height);
     stickyConfig.update();
 });
 
 document.getElementById('select-opacity').addEventListener('input', (event) => {
     cssVar('diff-site-opacity-right', event.target.value);
 });
-
 
 // SHIFT BUTTONS
 const updateShiftValue = function ($target, cssVarKey) {
