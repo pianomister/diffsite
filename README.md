@@ -9,9 +9,7 @@ Inspired by
 - https://help.github.com/en/articles/rendering-and-diffing-images#viewing-differences
 
 ## Feature wishlist / backlog
-- dynamic device selection list configured in JS constant
-- show above-the-fold line for devices
-- custom styling for device selection dropdown
+- advanced settings area which stores settings in local storage
 
 ## Development
 Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).

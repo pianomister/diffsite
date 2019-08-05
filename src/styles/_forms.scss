@@ -22,7 +22,7 @@ label {
 .label-group {
   display: flex;
   flex-flow: column-reverse nowrap;
-  margin: 2rem 1rem;
+  margin: 1.25rem 1rem;
 
   label {
     margin-top: 0.2em;
@@ -154,6 +154,30 @@ select.select {
 
     &:hover i,
     &:active i {
+      color: var(--primary);
+    }
+  }
+}
+
+// link button
+.link-button {
+  padding: 0.3em 1em;
+  border-radius: 1.1em;
+  background-color: var(--primary);
+  color: var(--background);
+  transition: background-color $transition-duration, color $transition-duration;
+
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+
+  &--shade {
+    background: var(--shade2);
+    color: var(--color);
+
+    &:hover,
+    &:active {
       color: var(--primary);
     }
   }

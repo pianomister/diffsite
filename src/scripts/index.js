@@ -141,6 +141,17 @@ document.getElementById('toggle-dark-mode').addEventListener('click', () => {
     document.body.classList.toggle('theme-dark');
 });
 
+// SETTINGS
+document.getElementById('settings-toggle').addEventListener('click', (event) => {
+    event.target.classList.toggle('link-button--shade');
+    document.getElementById('settings-container').classList.toggle('settings-container--active');
+});
+
+document.getElementById('settings-above-the-fold').addEventListener('click', (event) => {
+    document.getElementsByClassName('device-height-line').forEach((line) => line.classList.toggle('hidden'));
+});
+
+
 // CONFIG TOGGLES
 document.getElementById('mode-side-by-side').addEventListener('click', () => {
     $container.classList.remove('diff-container--mode-overlay');

@@ -24,8 +24,7 @@
   </p>
   <h1>diff<span>site</span></h1>
   <p class="intro">Visually compare two versions of a website with side-by-side matching, or overlay using opacity
-    (onion),
-    swipe and color blending modes.</p>
+    (onion), swipe and color blending modes.</p>
 
   <section class="url-inputs">
     <div class="label-group">
@@ -37,6 +36,21 @@
       <label for="input-url-right">Second URL</label>
       <input id="input-url-right" type="text" placeholder="Another website URL">
     </div>
+  </section>
+
+  <section class="settings-section">
+      <a id="settings-toggle" class="icon-link link-button link-button--shade small">
+        <i class="material-icons">
+            settings
+        </i>
+        advanced settings
+      </a>
+      <div class="settings-container" id="settings-container">
+        <label for="settings-above-the-fold">
+          <input type="checkbox" id="settings-above-the-fold" checked>
+          Show device height (above-the-fold line)
+        </label>
+      </div>
   </section>
 
   <section class="config-section">
