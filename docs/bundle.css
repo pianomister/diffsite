@@ -8,6 +8,7 @@
   --color: #111;
   --shade1: #e8e8e8;
   --shade2: #d0d0d0;
+  --alert: #f00;
   --diff-site-width: 375;
   --diff-site-device-height: 667;
   --diff-site-height: 15000;
@@ -31,7 +32,7 @@ body {
   transition: color 0.2s, background-color 0.2s; }
 
 h1 {
-  margin: 1em 2rem .5em;
+  margin: .5em 2rem .5em;
   font-size: 3rem;
   font-weight: 900;
   text-align: center;
@@ -60,11 +61,14 @@ a {
 .small {
   font-size: 0.8rem; }
 
+.hidden {
+  display: none; }
+
 p {
   text-align: center; }
   p.intro {
     max-width: 700px;
-    margin: 2em auto; }
+    margin: 1em auto .5em; }
 
 .github-link {
   display: flex;
@@ -103,6 +107,22 @@ p {
       content: "⚡"; }
   .url-inputs .label-group {
     flex: 1 1 0%; }
+
+.settings-section {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding-top: 1rem; }
+  .settings-section .settings-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 800px;
+    max-height: 0;
+    margin: .5rem auto;
+    overflow: hidden;
+    transition: max-height 0.2s; }
+    .settings-section .settings-container--active {
+      max-height: 100rem; }
 
 .config-section {
   display: flex;
@@ -171,7 +191,7 @@ label {
 .label-group {
   display: flex;
   flex-flow: column-reverse nowrap;
-  margin: 2rem 1rem; }
+  margin: 1.25rem 1rem; }
   .label-group label {
     margin-top: 0.2em; }
 
@@ -267,6 +287,20 @@ select.select option {
     color: var(--color); }
     .icon-button--shade:hover i,
     .icon-button--shade:active i {
+      color: var(--primary); }
+
+.link-button {
+  padding: 0.3em 1em;
+  border-radius: 1.1em;
+  background-color: var(--primary);
+  color: var(--background);
+  transition: background-color 0.2s, color 0.2s; }
+  .link-button:hover, .link-button:active {
+    opacity: 1; }
+  .link-button--shade {
+    background: var(--shade2);
+    color: var(--color); }
+    .link-button--shade:hover, .link-button--shade:active {
       color: var(--primary); }
 
 input[type="range"] {
@@ -369,6 +403,7 @@ input[type="range"]:focus::-ms-fill-upper {
   .diff-container--mode-swipe.diff-container--mode-overlay .diff-frame--left {
     z-index: 5;
     width: calc(var(--swipe-handle-position) * 1px);
+    overflow: hidden;
     transition: none; }
 
 .diff-frame {
@@ -377,7 +412,6 @@ input[type="range"]:focus::-ms-fill-upper {
   width: calc(var(--diff-site-width) * 1px);
   height: calc(var(--diff-site-height) * 1px);
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-  overflow: hidden;
   background: var(--shade1);
   transition: width 0.2s; }
   .diff-frame--left {
@@ -409,7 +443,17 @@ input[type="range"]:focus::-ms-fill-upper {
     width: 1px;
     height: 100%;
     margin: 0 auto;
-    background: #f00; }
+    background-color: var(--alert); }
+
+.device-height-line {
+  position: absolute;
+  top: calc(var(--diff-site-device-height) * 1px);
+  left: -10px;
+  width: calc(var(--diff-site-width) * 1px + 20px);
+  height: 1px;
+  border: 0;
+  background-color: var(--alert);
+  transition: top 0.2s; }
 
 
 /*# sourceMappingURL=bundle.css.map*/
