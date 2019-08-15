@@ -2,13 +2,18 @@
 <html lang="en">
 
 <head>
-  <title>diffsite</title>
+  <title>diffsite – visual website comparison tool</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visually compare two versions of a website with side-by-side matching, or overlay using opacity
+  (onion), swipe and color blending modes.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,900&display=swap" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -28,7 +33,7 @@
 
   <section class="url-inputs">
     <div class="label-group">
-      <label for="input-url-right">First URL</label>
+      <label for="input-url-left">First URL</label>
       <input id="input-url-left" type="text" placeholder="Website URL">
     </div>
     <span class="mode-switch" id="mode-amp-detect" title="detect AMP/canonical pendant for given first or second URL"></span>
@@ -55,7 +60,7 @@
 
   <section class="config-section">
     <div class="label-group">
-      <label>Viewport width</label>
+      <label for="select-device">Viewport width</label>
       <select id="select-device" class="select">
         <option value="375" selected>iPhone 6/7/8</option>
       </select>
@@ -97,6 +102,7 @@
         <button class="icon-button icon-button--shade" id="button-shift-up-left">
           <i class="material-icons">arrow_upward</i>
         </button>
+        <label for="shift-left" class="hidden">Set offset for left comparison</label>
         <div class="shift-input">
           <input id="shift-left" type="text" value="0">
           <span>px</span>
@@ -109,11 +115,11 @@
 
     <section class="diff-container" id="diff-container">
       <div id="frame-left" class="diff-frame diff-frame--left">
-        <iframe id="content-left" class="diff-content"></iframe>
+        <iframe id="content-left" class="diff-content" title="Left comparison site"></iframe>
         <hr class="device-height-line" />
       </div>
       <div id="frame-right" class="diff-frame diff-frame--right diff-frame--mode-blend">
-        <iframe id="content-right" class="diff-content"></iframe>
+        <iframe id="content-right" class="diff-content" title="Right comparison site"></iframe>
         <hr class="device-height-line" />
       </div>
       <div class="swipe-handle" id="compare-handle">
@@ -126,6 +132,7 @@
         <button class="icon-button icon-button--shade" id="button-shift-up-right">
           <i class="material-icons">arrow_upward</i>
         </button>
+        <label for="shift-right" class="hidden">Set offset for right comparison</label>
         <div class="shift-input">
           <input id="shift-right" type="text" value="0">
           <span>px</span>
