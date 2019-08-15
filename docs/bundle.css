@@ -38,7 +38,7 @@
 body {
   margin: 0;
   font-size: 1.2rem;
-  font-family: "Noto Sans SC", sans-serif;
+  font-family: "Noto Sans", "Noto Sans SC", sans-serif;
   background-color: var(--background);
   color: var(--color);
   transition: color 0.2s, background-color 0.2s; }
@@ -190,7 +190,7 @@ select {
   border-width: 0 0 1px;
   background: transparent;
   color: var(--color);
-  font-family: "Noto Sans SC", sans-serif;
+  font-family: "Noto Sans", "Noto Sans SC", sans-serif;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
   input:focus,
   select:focus {
@@ -274,8 +274,14 @@ select.select, select.select:active, select.select:hover, select.select:focus {
   font-weight: 400;
   text-align: center;
   transition: border-color 0.2s, color 0.2s, background-color 0.2s; }
+  @media (prefers-color-scheme: dark) {
+    select.select, select.select:active, select.select:hover, select.select:focus {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z' fill='%23111'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"); } }
   .theme-dark select.select, .theme-dark select.select:active, .theme-dark select.select:hover, .theme-dark select.select:focus {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z' fill='%23111'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"); }
+    @media (prefers-color-scheme: dark) {
+      .theme-dark select.select, .theme-dark select.select:active, .theme-dark select.select:hover, .theme-dark select.select:focus {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z' fill='%23f5f5f5'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E"); } }
 
 select.select option {
   font-weight: normal; }
