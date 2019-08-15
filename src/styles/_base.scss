@@ -1,10 +1,25 @@
-:root {
-  --primary: #03a9f4;
+@mixin light-colors {
   --background: #f5f5f5;
   --color: #111;
   --shade1: #e8e8e8;
   --shade2: #d0d0d0;
+}
+
+@mixin dark-colors {
+  --background: #222;
+  --color: #f5f5f5;
+  --shade1: #333;
+  --shade2: #444;
+}
+
+:root {
+  --primary: #03a9f4;
+  @include light-colors();
   --alert: #f00;
+
+  @media (prefers-color-scheme: dark) {
+    @include dark-colors();
+  }
 
   // configurable variables
   --diff-site-width: 375;
@@ -17,11 +32,13 @@
 }
 
 .theme-dark {
-  --background: #222;
-  --color: #f5f5f5;
-  --shade1: #333;
-  --shade2: #444;
+  @include dark-colors();
+
+  @media (prefers-color-scheme: dark) {
+    @include light-colors();
+  }
 }
+
 
 body {
   margin: 0;
