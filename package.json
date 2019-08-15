@@ -1,6 +1,6 @@
 {
   "name": "diffsite",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A tool to visually compare two versions of a website.",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.prod.js  --colors",

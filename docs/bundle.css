@@ -16,12 +16,24 @@
   --diff-site-shift-right: 0;
   --diff-site-opacity-right: 1;
   --swipe-handle-position: 200; }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #222;
+      --color: #f5f5f5;
+      --shade1: #333;
+      --shade2: #444; } }
 
 .theme-dark {
   --background: #222;
   --color: #f5f5f5;
   --shade1: #333;
   --shade2: #444; }
+  @media (prefers-color-scheme: dark) {
+    .theme-dark {
+      --background: #f5f5f5;
+      --color: #111;
+      --shade1: #e8e8e8;
+      --shade2: #d0d0d0; } }
 
 body {
   margin: 0;
