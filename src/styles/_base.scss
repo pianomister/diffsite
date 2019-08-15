@@ -217,6 +217,10 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     font-size: 0.8rem;
+
+    label {
+      font-weight: 400;
+    }
   }
 
   input {
