@@ -164,6 +164,8 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     font-size: 0.8rem; }
+    .shift-section .shift-input label {
+      font-weight: 400; }
   .shift-section input {
     display: inline-block;
     width: 80%;
@@ -431,6 +433,7 @@ input[type="range"]:focus::-ms-fill-upper {
   height: calc(var(--diff-site-height) * 1px);
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
   background: var(--shade1);
+  overflow: hidden;
   transition: width 0.2s; }
   .diff-frame--left {
     left: 0; }
