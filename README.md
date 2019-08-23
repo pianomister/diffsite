@@ -16,6 +16,10 @@ Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).
 
 ### Wishlist
 - Help / instructions
+- Add configurable iframe proxy in advanced settings
+- Add check for iframe-ability when the URL is loaded
+- Add fallback to screenshots via puppeteer
+- Demo pages that are shown instantly if no valid URL provided
 
 ### Installation
 

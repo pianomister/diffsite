@@ -52,7 +52,7 @@ body {
 h1 {
   margin: .5em 2rem .5em;
   font-size: 3rem;
-  font-weight: 900;
+  font-weight: 700;
   text-align: center;
   color: var(--primary);
 
@@ -62,7 +62,7 @@ h1 {
 }
 
 strong {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 a {
@@ -130,7 +130,7 @@ p {
     height: 3rem;
     padding: 0;
     border-radius: 50%;
-    font-weight: 900;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color $transition-duration;
 
