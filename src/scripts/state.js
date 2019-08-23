@@ -1,16 +1,15 @@
 const STATE = {
-    overlay: false,
-    mode: null,
+    fallbackLeftURL: './demo_left.html',
+    fallbackRightURL: './demo_right.html',
     handleDrag: false
 };
 
-export const cssVar = function (name, value) {
-    if (name[0] != '-') name = `--${name}`; //allow passing with or without --
-    if (value !== undefined) document.documentElement.style.setProperty(name, value);
-    return getComputedStyle(document.documentElement).getPropertyValue(name);
+const SETTINGS = {
+    aboveTheFoldLine: false
 };
 
 export const state = (key, value) => {
     if (value !== undefined) STATE[key] = value;
     return STATE[key];
 };
+

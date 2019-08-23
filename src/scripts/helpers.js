@@ -27,6 +27,17 @@ export function debounce(func, threshold, execAsap) {
 };
 
 /**
+ * 
+ * @param {string} name Name of the CSS variable to get or set the value for
+ * @param {string} [value] Content to be set for CSS variable with given name. If left empty, this function returns the value for name.
+ */
+export const cssVar = function (name, value) {
+    if (name[0] != '-') name = `--${name}`; //allow passing with or without --
+    if (value !== undefined) document.documentElement.style.setProperty(name, value);
+    return getComputedStyle(document.documentElement).getPropertyValue(name);
+};
+
+/**
  * Prepare a URL for use in iframe src attribute.
  * 
  * @param {string} url URL to check and prepare for iframe source

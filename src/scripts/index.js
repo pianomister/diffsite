@@ -1,10 +1,11 @@
 import '../styles/index.scss';
 
 import { DEVICES } from './constants';
-import { debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
-import { state, cssVar } from './state';
+import { cssVar, debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
+import { state } from './state';
 import * as Sticky from 'sticky-js';
 import { getAlternativeURL } from './amp-canonical-detector';
+import * as storage from './storage';
 
 // REFERENCES
 const $container = document.getElementById('diff-container');
@@ -85,7 +86,13 @@ const setShareableURL = function () {
 
 $inputLeft.addEventListener('input', (event) => {
     debounce(() => {
-        let url = event.target.value;
+        let url = event.target.value.trim();
+
+        if (url.length === 0) {
+            $contentLeft.src = state('fallbackLeftURL');
+            return;
+        }
+
         url = enhanceUrl(url);
         if (isValidUrl(url)) {
             event.target.value = url;
@@ -97,7 +104,13 @@ $inputLeft.addEventListener('input', (event) => {
 
 $inputRight.addEventListener('input', (event) => {
     debounce(() => {
-        let url = event.target.value;
+        let url = event.target.value.trim();
+
+        if (url.length === 0) {
+            $contentRight.src = state('fallbackRightURL');
+            return;
+        }
+
         url = enhanceUrl(url);
         if (isValidUrl(url)) {
             event.target.value = url;

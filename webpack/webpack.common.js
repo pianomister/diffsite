@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: Path.resolve(__dirname, '../src/scripts/index.js')
+    app: Path.resolve(__dirname, '../src/scripts/index.js'),
+    demo: Path.resolve(__dirname, '../src/styles/demo.scss')
   },
   output: {
     path: Path.join(__dirname, '../docs'),
@@ -24,7 +25,8 @@ module.exports = {
       { from: Path.resolve(__dirname, '../src/assets'), to: './' }
     ]),
     new HtmlWebpackPlugin({
-      template: Path.resolve(__dirname, '../src/index.html')
+      template: Path.resolve(__dirname, '../src/index.html'),
+      excludeChunks: ['demo']
     })
   ],
   resolve: {
