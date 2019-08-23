@@ -2,10 +2,9 @@ import '../styles/index.scss';
 
 import { DEVICES } from './constants';
 import { cssVar, debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
-import { state } from './state';
+import { state, settings } from './state';
 import * as Sticky from 'sticky-js';
 import { getAlternativeURL } from './amp-canonical-detector';
-import * as storage from './storage';
 
 // REFERENCES
 const $container = document.getElementById('diff-container');
@@ -155,14 +154,22 @@ document.getElementById('toggle-dark-mode').addEventListener('click', () => {
 });
 
 // SETTINGS
+const $settingsAboveTheFold = document.getElementById('settings-above-the-fold');
+
 document.getElementById('settings-toggle').addEventListener('click', (event) => {
     event.target.classList.toggle('link-button--shade');
     document.getElementById('settings-container').classList.toggle('settings-container--active');
 });
 
-document.getElementById('settings-above-the-fold').addEventListener('click', (event) => {
-    document.getElementsByClassName('device-height-line').forEach((line) => line.classList.toggle('hidden'));
+$settingsAboveTheFold.addEventListener('change', (event) => {
+    const checked = event.target.checked;
+    document.getElementsByClassName('device-height-line').forEach((line) => line.classList.toggle('hidden', !checked));
+    settings.set('showAboveTheFoldLine', checked);
 });
+
+// initialize settings area with correct properties
+$settingsAboveTheFold.checked = !settings.get('showAboveTheFoldLine');
+$settingsAboveTheFold.click();
 
 
 // CONFIG TOGGLES
@@ -219,7 +226,7 @@ $selectDevice.addEventListener('change', (event) => {
     const index = event.target.value;
     cssVar('diff-site-width', DEVICES[index].width);
     cssVar('diff-site-device-height', DEVICES[index].height);
-    stickyConfig.update();
+    stickyShift.update();
 });
 
 document.getElementById('select-opacity').addEventListener('input', (event) => {
@@ -276,6 +283,6 @@ $inputRight.dispatchEvent(new Event('input'));
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js');
+        // navigator.serviceWorker.register('./service-worker.js');
     });
 }

@@ -24,4 +24,4 @@ class Storage {
     }
 }
 
-export default new Storage();
+export const storage = new Storage();
