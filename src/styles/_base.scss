@@ -47,66 +47,10 @@ body {
   background-color: var(--background);
   color: var(--color);
   transition: color $transition-duration, background-color $transition-duration;
+  box-sizing: border-box;
 }
 
-h1 {
-  margin: .5em 2rem .5em;
-  font-size: 3rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--primary);
-
-  span {
-    opacity: 0.6;
-  }
-}
-
-strong {
-  font-weight: 700;
-}
-
-a {
-  color: var(--primary);
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover,
-  &:active,
-  &:focus {
-    opacity: 0.8;
-  }
-
-  &.icon-link {
-    display: inline-flex;
-    flex-flow: row nowrap;
-    align-items: center;
-
-    i {
-      font-size: 1.5em;
-      margin-right: .25em;
-      margin-top: .1em;
-    }
-  }
-}
-
-.small {
-  font-size: 0.8rem;
-}
-
-.hidden {
-  display: none;
-}
-
-p {
-  text-align: center;
-
-  &.intro {
-    max-width: 700px;
-    margin: 1em auto .5em;
-  }
-}
-
-.github-link {
+.top-links {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -245,4 +189,20 @@ main {
   align-items: flex-start;
   // secure min width for comparison section to prevent overlapping
   min-width: calc(var(--diff-site-width) * 2 * 1px + 30px + 10rem);
+}
+
+.help-section {
+  
+  &-inner {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--background);
+  }
+}
+
+footer {
+  margin: 2rem;
+  text-align: center;
 }
