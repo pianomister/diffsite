@@ -154,7 +154,7 @@
       <p>
         diffsite makes it easy to compare two versions of a website. It uses two iframes, where the pages chosen via
         the first and second URL are loaded into, and allows to switch between comparison and overlay modes quickly to
-        check a page for differences.
+        check for differences between both pages.
       </p>
       <p>
         diffsite itself is able to work offline. Simply reload the page twice to store all diffsite assets, and you are
@@ -175,7 +175,8 @@
         <li>Websites can block themselves being embedded in iframes by setting <em>X-Frame-Options</em> header with
           value <em>SAMEORIGIN</em> or <em>DENY</em>. There is no way to make browsers ignore this without making the
           browser vulnerable, as this is a security policy.</li>
-        <li>Some websites detect screen size in exotic ways, e.g. using JavaScript and specific window size properties.
+        <li>Some websites detect screen size in 'exotic' ways, e.g. using JavaScript and specific window size
+          properties.
           diffsite may display those pages incorrectly, when width detection does not work within the iframe.</li>
         <li>It is strongly advised to use URLs with HTTPS to prevent mixed-content warnings. Some browsers may block
           embedding HTTP content into an iframe within an HTTPS page.</li>
@@ -184,7 +185,20 @@
       <h4>URL inputs</h4>
       <p>
         Basically, HTTP and HTTPS URLs are supported. You may also compare websites that are running locally, e.g.
-        using an URL on <em>localhost</em>.
+        using a URL on <em>localhost</em>.
+      </p>
+      <p>
+        Between the URL inputs, there is a toggle labeled 'vs.' which can be used to detect <a
+          href="https://amp.dev/">AMP pages</a> (or their canonical counterpart) when only one URL is provided. This
+        fills in the second URL with the AMP/canonical counterpart and instantly loads it into the comparison view.</p>
+      <p>
+        Whenever a valid URL is provided, the diffsite URL is updated, so you can share the diffsite tool URL with
+        others and the URLs will be automatically prefilled and loaded into the comparison views.
+      </p>
+      <p>
+        Optionally, you can provide just one URL that either is or has an AMP page, and let diffsite auto-detect the AMP
+        or canonical page for you. To trigger auto-detection, add a parameter <code>&getamp=1</code> to the diffsite
+        tool URL.
       </p>
 
       <h3>Viewport widths</h3>
@@ -201,7 +215,9 @@
       </p>
 
       <h3>Comparison modes</h3>
-      <p></p>
+      <p>There are two modes available to display the two websites for comparison: <em>side-by-side</em> and
+        <em>overlay</em>. The toggle allows quick switching between both modes, as both have their advantages for the
+        comparison process.</p>
 
       <h4>Side-by-side</h4>
       <p>
