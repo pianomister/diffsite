@@ -1,0 +1,174 @@
+const express = require('express');
+const app = express(); 
+const axios = require('axios'); 
+const fs = require('fs');
+const marked = require('marked');
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace)
+}
+
+app.disable('x-powered-by')
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
+
+app.get('/', (req, res) => { 
+  let content = marked(fs.readFileSync('./README.md', 'utf8'))
+  res.send( '<div class="markdown-body" style="margin: 0 auto 0 auto; max-width: 850px; padding: 0 12px 0 12px">'
+     + '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">' 
+     + content 
+     + '</div>') 
+})
+
+// hack: parse every payload as text because we only pass it down anyway
+// app.use(bodyParser.text({type:"*/*"}))
+
+app.get('/proxy/:url', (req, res) => {
+  proxyURL(req, res, req.params.url)
+})
+
+app.all('/is-iframeable/:url', async (req, res) => {
+  await checkIframeableURL(req, res, req.params.url)
+})
+
+
+/**
+ * Returns if the given URL can be embedded into an iframe.
+ */
+const checkIframeableURL = async(req, res, remoteUrl) => {
+  try {
+    const result = await isIframeable(req, remoteUrl)
+    return res.status(200).json({
+      status: result.status,
+      isIframeable: result.check
+    })
+  } catch (e) {
+    return res.status(200).json({
+      error: e,
+      status: e.status ? e.status : 500,
+      isIframeable: null
+    })
+  }
+}
+
+
+/**
+ * Checks if a given URL can be embedded into an iframe
+ * @author https://github.com/Antoinebr/is-iframeable/blob/master/index.js
+ */
+const isIframeable = async(req, remoteUrl) => {
+  return await axios.get(remoteUrl, req.body, { headers: req.headers })
+    .then(response => {
+    
+      let check = null
+      if (!response.status === 200 && !response.status === 404) {
+        return {
+          status: response.status,
+          check: check
+        }
+      }
+
+      const option = response.headers['x-frame-options']
+      if (typeof option !== 'undefined' && option !== '') {
+        check = false
+      } else {
+        check = true
+      }
+    
+      return {
+        status: response.status,
+        check: check
+      }
+    })
+    .catch(error => {
+      let check = null
+      if (error.response) {
+        const option = error.response.headers['x-frame-options']
+        if (typeof option !== 'undefined' && option !== '') {
+          check = false
+        } else {
+          check = true
+        }
+      }
+      return {
+        status: error.response ? error.response.status : 400,
+        check: check
+      }
+    })
+}
+
+
+/**
+ * Proxies a given HTML document and rewrites relative URLs so that
+ * it can be embedded in an iframe from this service.
+ */
+function proxyURL(req, res, remoteUrl) {
+  const reqMethod = req.method.toLowerCase()
+
+  delete req.headers['host']
+  delete req.headers['x-forwarded-host']
+
+  let url = null
+  try {
+    url = new URL(remoteUrl)
+  } catch(error) {
+    res.status(404).json({
+      error: 'invalid URL'
+    })
+    return
+  }
+  const protocol = url.protocol
+
+  let path = `${url.pathname}`
+  if (path.lastIndexOf('/') > 0) {
+    path = path.substring(0, path.lastIndexOf('/')) + '/'
+  } else if(path.length != 1) {
+    path = path + '/'
+  }
+  const absoluteBase = url.origin + '/'
+  const absolutePath = url.origin + path
+
+  axios.get(remoteUrl, req.body, { headers: req.headers })
+    .then(response => {
+      try {
+        res.set('content-type', response.headers['content-type'])
+        let data = response.data;
+
+        // replace references without protocol
+        data = replaceAll(data, 'src="//', `src="${protocol}//`)
+        data = replaceAll(data, 'href="//', `href="${protocol}//`)
+
+        // set correct base
+        if (data.indexOf('<base ') > 0) {
+          // replace base
+          data = replaceAll(data, '<base href="/', '<base href="' + absolutePath)
+        } else {
+          data = replaceAll(data, '</head>', '<base href="' + absolutePath + '" /></head>')
+        }
+
+        // replace all remaining absolute links
+        data = replaceAll(data, 'src="/', `src="${absoluteBase}`)
+        data = replaceAll(data, 'href="/', `href="${absoluteBase}`)
+
+        res.send(data)
+      } catch(error) {
+        console.log('Error while manipulating response.')
+        res.status(500).json({
+          error: 'Error while manipulating response.'
+        })
+      }
+    })
+    .catch(err => {
+      console.log('Error when receiving response.')
+      res.status(500).json({
+        error: 'Error when receiving response.'
+      })
+  })
+}
+
+app.listen(8080)
+console.log('server running')
