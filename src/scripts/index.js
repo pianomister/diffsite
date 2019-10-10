@@ -124,7 +124,7 @@ const processURLInput = function (event, $notification, $iframe) {
                         notification.set($notification, notification.types.error, NOTIFICATIONS.errorUnreachableURL);
                     } else {
                         // not sure what happened, try to embed anyway
-                        notification.set($notification, notification.types.warning, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
+                        notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
                         $iframe.src = url;
                         setShareableURL();
                     }
@@ -132,7 +132,12 @@ const processURLInput = function (event, $notification, $iframe) {
 
                 case true:
                     // proceed with embedding
-                    notification.hide($notification);
+                    if ((location.href.indexOf('https') === 0 ^ url.indexOf('https') === 0) === 1) {
+                        notification.set($notification, notification.types.warning, NOTIFICATIONS.warningMixedContent);
+                    } else {
+                        notification.hide($notification);
+                    }
+
                     $iframe.src = url;
                     setShareableURL();
                     break;

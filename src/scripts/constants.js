@@ -51,6 +51,7 @@ export const NOTIFICATIONS = {
     infoInvalidURL: 'URL is not valid.',
     infoCheckIsIframeable: 'Checking iframe compatibility ...',
     infoIframeCheckFailedButEmbedding: 'Iframe compatibility could not be determined, trying to embed the URL anyway.',
+    warningMixedContent: 'Mixed content detected, make sure to use only either HTTP or HTTPS for diffsite and the URLs.',
     errorNoIframeEmbedding: 'URL does not allow iframe embedding.',
     errorUnreachableURL: 'URL can not be reached.'
 };
