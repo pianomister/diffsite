@@ -46,7 +46,6 @@ label {
   justify-content: flex-start;
   align-items: stretch;
   margin: 0;
-  box-sizing: border-box;
   font-size: 0;
 
   input {
@@ -58,7 +57,6 @@ label {
     & + label {
       margin: 0;
       padding: 0.5rem 1rem;
-      box-sizing: border-box;
       position: relative;
       display: inline-block;
       border: solid 1px var(--shade2);
@@ -105,7 +103,6 @@ select.select {
     appearance: none;
     margin: 0;
     padding: 0.5rem 2.5rem 0.5rem 1rem;
-    box-sizing: border-box;
     position: relative;
     display: inline-block;
     border: solid 1px var(--primary);

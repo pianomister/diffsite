@@ -118,16 +118,32 @@
     </section>
 
     <section class="diff-container" id="diff-container">
-      <div id="frame-left" class="diff-frame diff-frame--left">
-        <iframe id="content-left" class="diff-content" title="Left comparison site"></iframe>
-        <hr class="device-height-line" />
+      <div class="diff-notifications-wrapper">
+        <div class="diff-notifications">
+            <div class="notification" id="notification-left">
+              <div class="loader hidden"><div></div><div></div><div></div><div></div></div>
+              <i class="material-icons"></i>
+              <span></span>
+            </div>
+            <div class="notification" id="notification-right">
+              <div class="loader hidden"><div></div><div></div><div></div><div></div></div>
+              <i class="material-icons"></i>
+              <span></span>
+            </div>
+        </div>
       </div>
-      <div id="frame-right" class="diff-frame diff-frame--right diff-frame--mode-blend">
-        <iframe id="content-right" class="diff-content" title="Right comparison site"></iframe>
-        <hr class="device-height-line" />
-      </div>
-      <div class="swipe-handle" id="compare-handle">
-        <div class="swipe-handle__line"></div>
+      <div class="diff-container-inner">
+        <div id="frame-left" class="diff-frame diff-frame--left">
+          <iframe id="content-left" class="diff-content" title="Left comparison site"></iframe>
+          <hr class="device-height-line" />
+        </div>
+        <div id="frame-right" class="diff-frame diff-frame--right diff-frame--mode-blend">
+          <iframe id="content-right" class="diff-content" title="Right comparison site"></iframe>
+          <hr class="device-height-line" />
+        </div>
+        <div class="swipe-handle" id="compare-handle">
+          <div class="swipe-handle__line"></div>
+        </div>
       </div>
     </section>
 
@@ -312,7 +328,7 @@
       </p>
       <p>
         Using the arrows, the page can be shifted up and down in 1-pixel steps. The input inbetween the fields can be
-        used to enter any positive or negative value to directly shift gthe page by that pixel distance.
+        used to enter any positive or negative value to directly shift the page by that pixel distance.
       </p>
     </div>
   </section>

@@ -45,3 +45,12 @@ export const DEVICES = [
         height: 1366
     }
 ];
+
+export const NOTIFICATIONS = {
+    infoCheckValidity: 'Checking URL validity ...',
+    infoInvalidURL: 'URL is not valid.',
+    infoCheckIsIframeable: 'Checking iframe compatibility ...',
+    infoIframeCheckFailedButEmbedding: 'Iframe compatibility could not be determined, trying to embed the URL anyway.',
+    errorNoIframeEmbedding: 'URL does not allow iframe embedding.',
+    errorUnreachableURL: 'URL can not be reached.'
+};

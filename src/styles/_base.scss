@@ -14,8 +14,10 @@
 
 :root {
   --primary: #03a9f4;
+  --info: var(--primary);
+  --warning: #f4aa03;
+  --alert: #ca2702;
   @include light-colors();
-  --alert: #f00;
 
   @media (prefers-color-scheme: dark) {
     @include dark-colors();
@@ -47,7 +49,10 @@ body {
   background-color: var(--background);
   color: var(--color);
   transition: color $transition-duration, background-color $transition-duration;
-  box-sizing: border-box;
+
+  &, & * {
+    box-sizing: border-box;
+  }
 }
 
 .top-links {
@@ -114,7 +119,6 @@ body {
   padding-top: 1rem;
 
   .settings-container {
-    box-sizing: border-box;
     width: 100%;
     max-width: 800px;
     max-height: 0;

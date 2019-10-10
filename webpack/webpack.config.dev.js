@@ -19,6 +19,7 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
+      /*
       {
         test: /\.(js)$/,
         include: Path.resolve(__dirname, '../src'),
@@ -28,6 +29,7 @@ module.exports = merge(common, {
           emitWarning: true,
         }
       },
+      */
       {
         test: /\.(js)$/,
         include: Path.resolve(__dirname, '../src'),

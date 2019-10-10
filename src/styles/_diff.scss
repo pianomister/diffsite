@@ -1,3 +1,29 @@
+.diff-notifications {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: calc(var(--diff-site-width) * 2px + 30px);
+  min-height: 2.2rem;
+  overflow-x: hidden;
+  transition: opacity $transition-duration;
+
+  &-wrapper {
+    width: 100%;
+
+    .diff-container--mode-overlay & {
+      overflow-x: hidden;
+    }
+  }
+
+  .notification {
+    width: calc(var(--diff-site-width) * 1px);
+  }
+
+  .diff-container--mode-overlay & {
+    opacity: 0;
+  }
+}
+
 .diff-container {
   position: relative;
   display: block;
@@ -5,6 +31,10 @@
   height: calc(var(--diff-site-height) * 1px);
   margin: 3rem 1rem;
   transition: width $transition-duration;
+
+  &-inner {
+    position: relative;
+  }
 
   &--mode-overlay {
     width: calc(var(--diff-site-width) * 1px);

@@ -1,30 +1,5 @@
 import isURL from 'validator/lib/isURL';
-
-/**
- * Generic debounce for events
- * 
- * @returns {function} method containing debounce code as requested 
- * @author http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
- */
-export function debounce(func, threshold, execAsap) {
-    let timeout;
-
-    return function debounced() {
-        let obj = this, args = arguments;
-        function delayed() {
-            if (!execAsap)
-                func.apply(obj, args);
-            timeout = null;
-        };
-
-        if (timeout)
-            clearTimeout(timeout);
-        else if (execAsap)
-            func.apply(obj, args);
-
-        timeout = setTimeout(delayed, threshold || 100);
-    };
-};
+import { settings } from './state';
 
 /**
  * 
@@ -60,6 +35,30 @@ export function isValidUrl(url) {
 }
 
 /**
+ * Checks if a page can be embedded into an iframe.
+ * 
+ * @param {string} url URL that will be checked for headers that disallow embedding in iframes
+ * @returns {Object} object with atribute 'isIframeable' true if page is iframeable, false if not, and null if it can not be determined. Attribute 'status' informs about type of errors.
+ */
+export async function canEmbedInIframe(url) {
+    try {
+        const checkURL = settings.get('isIframeableAPI').replace('%s', encodeURIComponent(url));
+        const response = await fetch(checkURL);
+        console.log('canEmbed response', response);
+        const data = await response.json();
+        return data && typeof data.isIframeable !== 'undefined' ? data : {
+            status: 0,
+            isIframeable: null
+        };
+    } catch (error) {
+        return {
+            status: 0,
+            isIframeable: null
+        };
+    }
+}
+
+/**
  * Extracts value from URL query parameter.
  * 
  * @param {string} name parameter name to extract value for
@@ -75,4 +74,3 @@ export function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-  

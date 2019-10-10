@@ -1,9 +1,11 @@
 import '../styles/index.scss';
 
-import { DEVICES } from './constants';
-import { cssVar, debounce, isValidUrl, enhanceUrl, getParameterByName } from './helpers';
-import { state, settings } from './state';
 import * as Sticky from 'sticky-js';
+import { debounce } from 'debounce';
+import { DEVICES, NOTIFICATIONS } from './constants';
+import { cssVar, isValidUrl, enhanceUrl, getParameterByName, canEmbedInIframe } from './helpers';
+import { state, settings } from './state';
+import { notification } from './notification';
 import { getAlternativeURL } from './amp-canonical-detector';
 
 // REFERENCES
@@ -12,6 +14,8 @@ const $inputLeft = document.getElementById('input-url-left');
 const $inputRight = document.getElementById('input-url-right');
 const $ampDetectButton = document.getElementById('mode-amp-detect');
 const $selectDevice = document.getElementById('select-device');
+const $notificationLeft = document.getElementById('notification-left');
+const $notificationRight = document.getElementById('notification-right');
 const $left = document.getElementById('frame-left');
 const $right = document.getElementById('frame-right');
 const $contentLeft = document.getElementById('content-left');
@@ -83,41 +87,69 @@ const setShareableURL = function () {
     );
 };
 
-$inputLeft.addEventListener('input', (event) => {
-    debounce(() => {
-        let url = event.target.value.trim();
+const processURLInput = function (event, $notification, $iframe) {
+    let url = event.target.value.trim();
 
-        if (url.length === 0) {
-            $contentLeft.src = state('fallbackLeftURL');
-            return;
-        }
+    if (url.length === 0) {
+        $iframe.src = state('fallbackLeftURL');
+        setShareableURL();
+        notification.hide($notification);
+        return;
+    }
 
-        url = enhanceUrl(url);
-        if (isValidUrl(url)) {
-            event.target.value = url;
-            $contentLeft.src = url;
-            setShareableURL();
-        }
-    }, 700)();
-});
+    notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckValidity);
 
-$inputRight.addEventListener('input', (event) => {
-    debounce(() => {
-        let url = event.target.value.trim();
+    url = enhanceUrl(url);
+    if (isValidUrl(url)) {
+        event.target.value = url;
 
-        if (url.length === 0) {
-            $contentRight.src = state('fallbackRightURL');
-            return;
-        }
+        notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckIsIframeable);
 
-        url = enhanceUrl(url);
-        if (isValidUrl(url)) {
-            event.target.value = url;
-            $contentRight.src = url;
-            setShareableURL();
-        }
-    }, 700)();
-});
+        new Promise((resolve, reject) => {
+            if (!!settings.get('isIframeableAPIEnabled')) {
+                resolve(canEmbedInIframe(url));
+            } else {
+                resolve(true);
+            }
+        }).then(result => {
+            switch (result.isIframeable) {
+                case false:
+                    notification.set($notification, notification.types.error, NOTIFICATIONS.errorNoIframeEmbedding);
+                    break;
+
+                case null:
+                    if (result.status === 400) {
+                        // URL could not be loaded on server side
+                        notification.set($notification, notification.types.error, NOTIFICATIONS.errorUnreachableURL);
+                    } else {
+                        // not sure what happened, try to embed anyway
+                        notification.set($notification, notification.types.warning, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
+                        $iframe.src = url;
+                        setShareableURL();
+                    }
+                    break;
+
+                case true:
+                    // proceed with embedding
+                    notification.hide($notification);
+                    $iframe.src = url;
+                    setShareableURL();
+                    break;
+            }
+        })
+    } else {
+        notification.set($notification, notification.types.info, NOTIFICATIONS.infoInvalidURL);
+    }
+};
+
+
+$inputLeft.addEventListener('input', debounce((event) => {
+    processURLInput(event, $notificationLeft, $contentLeft);
+}, 700));
+
+$inputRight.addEventListener('input', debounce((event) => {
+    processURLInput(event, $notificationRight, $contentRight);
+}, 700));
 
 // AMP DETECTION
 $ampDetectButton.addEventListener('click', function () {
@@ -266,23 +298,23 @@ $shiftRight.addEventListener('input', () => {
     cssVar('diff-site-shift-right', parseInt($shiftRight.value) || 0);
 });
 
-// update URLs on site load
-const url1 = getParameterByName('url1');
-const url2 = getParameterByName('url2');
-if (url1) $inputLeft.value = url1;
-if (url2) $inputRight.value = url2;
+// Use the window load event to keep the page load performant
+window.addEventListener('load', () => {
+    // update URLs on site load
+    const url1 = getParameterByName('url1');
+    const url2 = getParameterByName('url2');
+    if (url1) $inputLeft.value = url1;
+    if (url2) $inputRight.value = url2;
 
-// auto-detect AMP/canonical with getamp parameter
-const getAmp = getParameterByName('getamp');
-if (getAmp) $ampDetectButton.click();
+    // auto-detect AMP/canonical with getamp parameter
+    const getAmp = getParameterByName('getamp');
+    if (getAmp) $ampDetectButton.click();
 
-$inputLeft.dispatchEvent(new Event('input'));
-$inputRight.dispatchEvent(new Event('input'));
+    $inputLeft.dispatchEvent(new Event('input'));
+    $inputRight.dispatchEvent(new Event('input'));
 
-// install SW
-if ('serviceWorker' in navigator) {
-    // Use the window load event to keep the page load performant
-    window.addEventListener('load', () => {
+    // install SW
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js');
-    });
-}
+    }
+});

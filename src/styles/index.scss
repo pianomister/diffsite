@@ -6,4 +6,10 @@
 @import 'base';
 @import 'typography';
 @import 'forms';
+@import 'loader';
+@import 'notification';
 @import 'diff';
+
+.hidden {
+    display: none;
+  }
