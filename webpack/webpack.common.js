@@ -1,4 +1,5 @@
 const Path = require('path');
+const Webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -19,6 +20,9 @@ module.exports = {
     }
   },
   plugins: [
+    new Webpack.DefinePlugin({
+      VERSION: JSON.stringify(require('../package.json').version)
+    }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: Path.resolve(__dirname, '../public'), to: 'public' },

@@ -313,6 +313,8 @@ window.addEventListener('load', () => {
     $inputLeft.dispatchEvent(new Event('input'));
     $inputRight.dispatchEvent(new Event('input'));
 
+    document.getElementById('version').innerText = VERSION;
+
     // install SW
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js');
