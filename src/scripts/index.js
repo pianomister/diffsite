@@ -80,10 +80,11 @@ function swipeHandleMove(e) {
 const setShareableURL = function () {
     const url1 = encodeURIComponent($inputLeft.value);
     const url2 = encodeURIComponent($inputRight.value);
+    const queryString = url1.length > 0 && url2.length > 0 ? `?url1=${url1}&url2=${url2}` : '';
     window.history.pushState(
         {},
         document.title,
-        `${location.protocol}//${location.host}${location.pathname}?url1=${url1}&url2=${url2}`
+        `${location.protocol}//${location.host}${location.pathname}${queryString}`
     );
 };
 
