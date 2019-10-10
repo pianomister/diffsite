@@ -88,11 +88,11 @@ const setShareableURL = function () {
     );
 };
 
-const processURLInput = function (event, $notification, $iframe) {
+const processURLInput = function (event, $notification, $iframe, fallbackURL) {
     let url = event.target.value.trim();
 
     if (url.length === 0) {
-        $iframe.src = state('fallbackLeftURL');
+        $iframe.src = fallbackURL;
         setShareableURL();
         notification.hide($notification);
         return;
@@ -150,11 +150,11 @@ const processURLInput = function (event, $notification, $iframe) {
 
 
 $inputLeft.addEventListener('input', debounce((event) => {
-    processURLInput(event, $notificationLeft, $contentLeft);
+    processURLInput(event, $notificationLeft, $contentLeft, state('fallbackLeftURL'));
 }, 700));
 
 $inputRight.addEventListener('input', debounce((event) => {
-    processURLInput(event, $notificationRight, $contentRight);
+    processURLInput(event, $notificationRight, $contentRight, state('fallbackRightURL'));
 }, 700));
 
 // AMP DETECTION
