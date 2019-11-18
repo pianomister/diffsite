@@ -219,6 +219,7 @@ document.getElementById('toggle-dark-mode').addEventListener('click', () => {
 
 // SETTINGS
 const $settingsAboveTheFold = document.getElementById('settings-above-the-fold');
+const $settingsIframeabilityCheck = document.getElementById('settings-iframeability-check');
 
 document.getElementById('settings-toggle').addEventListener('click', (event) => {
     event.target.classList.toggle('link-button--shade');
@@ -231,9 +232,15 @@ $settingsAboveTheFold.addEventListener('change', (event) => {
     settings.set('showAboveTheFoldLine', checked);
 });
 
+$settingsIframeabilityCheck.addEventListener('change', (event) => {
+    const checked = event.target.checked;
+    settings.set('isIframeableAPIEnabled', checked);
+});
+
 // initialize settings area with correct properties
 $settingsAboveTheFold.checked = !settings.get('showAboveTheFoldLine');
-$settingsAboveTheFold.click();
+$settingsAboveTheFold.click(); // click required to apply state in UI
+$settingsIframeabilityCheck.checked = settings.get('isIframeableAPIEnabled');
 
 
 // CONFIG TOGGLES
