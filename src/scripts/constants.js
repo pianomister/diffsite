@@ -46,6 +46,10 @@ export const DEVICES = [
     }
 ];
 
+export const LABELS = {
+    skip: 'skip'
+};
+
 export const NOTIFICATIONS = {
     infoCheckValidity: 'Checking URL validity ...',
     infoInvalidURL: 'URL is not valid.',
@@ -53,6 +57,7 @@ export const NOTIFICATIONS = {
     infoLocalhostDetected: 'Localhost detected. Check your local server settings in case it does not work.',
     infoIframeCheckFailedButEmbedding: 'Iframe compatibility could not be determined, trying to embed the URL anyway.',
     warningMixedContent: 'Mixed content detected, make sure to use only either HTTP or HTTPS for diffsite and the URLs.',
+    warningUserSkippedIframeCheck: 'Iframe compatibility check was skipped.',
     errorNoIframeEmbedding: 'URL does not allow iframe embedding.',
     errorUnreachableURL: 'URL can not be reached.'
 };

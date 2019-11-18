@@ -2,7 +2,7 @@ import '../styles/index.scss';
 
 import * as Sticky from 'sticky-js';
 import { debounce } from 'debounce';
-import { DEVICES, NOTIFICATIONS } from './constants';
+import { DEVICES, NOTIFICATIONS, LABELS } from './constants';
 import { cssVar, isValidUrl, enhanceUrl, getParameterByName, canEmbedInIframe } from './helpers';
 import { state, settings } from './state';
 import { notification } from './notification';
@@ -104,14 +104,14 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
     if (isValidUrl(url)) {
         event.target.value = url;
 
-        notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckIsIframeable);
-
+        let iframeCheckResolve = null;
         new Promise((resolve, reject) => {
+            iframeCheckResolve = resolve;
             if (url.indexOf('localhost') !== -1) {
                 notification.set($notification, notification.types.info, NOTIFICATIONS.infoLocalhostDetected);
                 resolve({ isIframeable: true });
             } else if (!!settings.get('isIframeableAPIEnabled')) {
-                resolve(canEmbedInIframe(url));
+                canEmbedInIframe(url).then(resolve);
             } else {
                 resolve({ isIframeable: true });
             }
@@ -126,8 +126,14 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                         // URL could not be loaded on server side
                         notification.set($notification, notification.types.error, NOTIFICATIONS.errorUnreachableURL);
                     } else {
-                        // not sure what happened, try to embed anyway
-                        notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
+                        if (result.status === 999) {
+                            // User skipped
+                            notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck);
+                        } else {
+                            // not sure what happened, try to embed anyway
+                            notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
+                        }
+
                         $iframe.src = url;
                         setShareableURL();
                     }
@@ -148,6 +154,14 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                     break;
             }
         })
+
+        notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckIsIframeable, LABELS.skip, () => {
+            // User skipped iframe check
+            iframeCheckResolve({
+                status: 999,
+                isIframeable: null
+            })
+        });
     } else {
         notification.set($notification, notification.types.info, NOTIFICATIONS.infoInvalidURL);
     }
