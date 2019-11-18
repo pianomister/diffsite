@@ -16,7 +16,7 @@ class Notification {
         };
     }
 
-    set($selector, type, text) {
+    set($selector, type, text, actionText, actionCallback) {
         if (!(type in this.classes)) {
             return;
         }
@@ -48,6 +48,18 @@ class Notification {
 
         // set text
         $selector.querySelector('span').innerText = text;
+
+        // set skip link
+        if (actionText) {
+            $selector.querySelector('a').innerText = actionText;
+            $selector.querySelector('a').addEventListener('click', actionCallback);
+        } else {
+            // remove event listeners
+            const el = $selector.querySelector('a');
+            el.innerText = '';
+            const elClone = el.cloneNode(true);
+            el.parentNode.replaceChild(elClone, el);
+        }
     }
 
     hide($selector) {
@@ -55,6 +67,7 @@ class Notification {
         $selector.querySelector('.loader').classList.add('hidden');
         $selector.querySelector('i').innerText = '';
         $selector.querySelector('span').innerText = '';
+        $selector.querySelector('a').innerText = '';
     }
 }
 

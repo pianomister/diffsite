@@ -116,9 +116,18 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                 resolve({ isIframeable: true });
             }
         }).then(result => {
+
+            const setIframe = () => {
+                $iframe.src = url;
+                setShareableURL();
+            };
+
             switch (result.isIframeable) {
                 case false:
-                    notification.set($notification, notification.types.error, NOTIFICATIONS.errorNoIframeEmbedding);
+                    notification.set($notification, notification.types.error, NOTIFICATIONS.errorNoIframeEmbedding, LABELS.embedAnyway, () => {
+                        notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck);
+                        setIframe();
+                    });
                     break;
 
                 case null:
@@ -134,8 +143,7 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                             notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
                         }
 
-                        $iframe.src = url;
-                        setShareableURL();
+                        setIframe();
                     }
                     break;
 
@@ -149,8 +157,7 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                         notification.hide($notification);
                     }
 
-                    $iframe.src = url;
-                    setShareableURL();
+                    setIframe();
                     break;
             }
         })

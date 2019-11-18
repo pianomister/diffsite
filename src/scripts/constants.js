@@ -47,7 +47,8 @@ export const DEVICES = [
 ];
 
 export const LABELS = {
-    skip: 'skip'
+    skip: 'skip',
+    embedAnyway: 'embed anyway'
 };
 
 export const NOTIFICATIONS = {
