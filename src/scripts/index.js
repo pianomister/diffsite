@@ -107,10 +107,13 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
         notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckIsIframeable);
 
         new Promise((resolve, reject) => {
-            if (!!settings.get('isIframeableAPIEnabled')) {
+            if (url.indexOf('localhost') !== -1) {
+                notification.set($notification, notification.types.info, NOTIFICATIONS.infoLocalhostDetected);
+                resolve({ isIframeable: true });
+            } else if (!!settings.get('isIframeableAPIEnabled')) {
                 resolve(canEmbedInIframe(url));
             } else {
-                resolve(true);
+                resolve({ isIframeable: true });
             }
         }).then(result => {
             switch (result.isIframeable) {
@@ -132,7 +135,9 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
 
                 case true:
                     // proceed with embedding
-                    if ((location.href.indexOf('https') === 0 ^ url.indexOf('https') === 0) === 1) {
+                    if (url.indexOf('localhost') !== -1) {
+                        // localhost; keep info about localhost
+                    } else if ((location.href.indexOf('https') === 0 ^ url.indexOf('https') === 0) === 1) {
                         notification.set($notification, notification.types.warning, NOTIFICATIONS.warningMixedContent);
                     } else {
                         notification.hide($notification);

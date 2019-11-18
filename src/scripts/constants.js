@@ -50,6 +50,7 @@ export const NOTIFICATIONS = {
     infoCheckValidity: 'Checking URL validity ...',
     infoInvalidURL: 'URL is not valid.',
     infoCheckIsIframeable: 'Checking iframe compatibility ...',
+    infoLocalhostDetected: 'Localhost detected. Check your local server settings in case it does not work.',
     infoIframeCheckFailedButEmbedding: 'Iframe compatibility could not be determined, trying to embed the URL anyway.',
     warningMixedContent: 'Mixed content detected, make sure to use only either HTTP or HTTPS for diffsite and the URLs.',
     errorNoIframeEmbedding: 'URL does not allow iframe embedding.',
