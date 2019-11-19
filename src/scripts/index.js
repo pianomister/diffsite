@@ -3,7 +3,7 @@ import '../styles/index.scss';
 import * as Sticky from 'sticky-js';
 import { debounce } from 'debounce';
 import { DEVICES, NOTIFICATIONS, LABELS } from './constants';
-import { cssVar, isValidUrl, enhanceUrl, getParameterByName, canEmbedInIframe } from './helpers';
+import { cssVar, isValidUrl, enhanceUrl, getProxyURL, getParameterByName, canEmbedInIframe } from './helpers';
 import { state, settings } from './state';
 import { notification } from './notification';
 import { getAlternativeURL } from './amp-canonical-detector';
@@ -122,25 +122,45 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                 setShareableURL();
             };
 
+            const setProxy = () => {
+                $iframe.src = getProxyURL(url);
+                setShareableURL();
+            };
+
             switch (result.isIframeable) {
                 case false:
-                    notification.set($notification, notification.types.error, NOTIFICATIONS.errorNoIframeEmbedding, LABELS.embedAnyway, () => {
-                        notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck);
-                        setIframe();
+                    notification.set($notification, notification.types.error, NOTIFICATIONS.errorNoIframeEmbedding, LABELS.useProxy, () => {
+                        notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUsingIframeProxy, LABELS.embedDirectly, () => {
+                            notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck);
+                            setIframe();
+                        });
+                        setProxy();
                     });
                     break;
 
                 case null:
                     if (result.status === 400) {
                         // URL could not be loaded on server side
-                        notification.set($notification, notification.types.error, NOTIFICATIONS.errorUnreachableURL);
+                        notification.set($notification, notification.types.error, NOTIFICATIONS.errorUnreachableURL, LABELS.embedAnyway, () => {
+                            notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck, LABELS.useProxy, () => {
+                                notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUsingIframeProxy);
+                                setProxy();
+                            });
+                            setIframe();
+                        });
                     } else {
                         if (result.status === 999) {
                             // User skipped
-                            notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck);
+                            notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUserSkippedIframeCheck, LABELS.useProxy, () => {
+                                notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUsingIframeProxy);
+                                setProxy();
+                            });
                         } else {
                             // not sure what happened, try to embed anyway
-                            notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding);
+                            notification.set($notification, notification.types.info, NOTIFICATIONS.infoIframeCheckFailedButEmbedding, LABELS.useProxy, () => {
+                                notification.set($notification, notification.types.warning, NOTIFICATIONS.warningUsingIframeProxy);
+                                setProxy();
+                            });
                         }
 
                         setIframe();

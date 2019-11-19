@@ -9,7 +9,8 @@ const STATE = {
 const SETTINGS_DEFAULT = {
     showAboveTheFoldLine: false,
     isIframeableAPI: 'https://iframe-proxy.glitch.me/is-iframeable/%s',
-    isIframeableAPIEnabled: true
+    isIframeableAPIEnabled: true,
+    iframeProxyAPI: 'https://iframe-proxy.glitch.me/proxy/%s'
 };
 
 let SETTINGS = {};

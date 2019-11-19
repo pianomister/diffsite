@@ -9,17 +9,12 @@ Inspired by
 - https://help.github.com/en/articles/rendering-and-diffing-images#viewing-differences
 
 ## Feature wishlist / backlog
-- advanced settings area which stores settings in local storage
-
-## Development
-Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).
-
-### Wishlist
-- Help / instructions
-- Add configuration for iframe-ability check
 - Add configurable iframe proxy in advanced settings
 - Add fallback to screenshots via puppeteer
 - Back-to-top button
+
+## Development
+Project based on [webpack-starter](https://github.com/wbkd/webpack-starter).
 
 ### Installation
 

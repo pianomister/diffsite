@@ -59,6 +59,15 @@ export async function canEmbedInIframe(url) {
 }
 
 /**
+ * Returns a proxy URL for a given url that is not iframeable.
+ * 
+ * @param {string} url The URL to built the proxy call for
+ */
+export function getProxyURL(url) {
+    return settings.get('iframeProxyAPI').replace('%s', encodeURIComponent(url));
+}
+
+/**
  * Extracts value from URL query parameter.
  * 
  * @param {string} name parameter name to extract value for

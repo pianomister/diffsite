@@ -48,7 +48,9 @@ export const DEVICES = [
 
 export const LABELS = {
     skip: 'skip',
-    embedAnyway: 'embed anyway'
+    embedAnyway: 'embed anyway',
+    useProxy: 'use proxy to embed URL',
+    embedDirectly: 'embed without proxy'
 };
 
 export const NOTIFICATIONS = {
@@ -59,6 +61,7 @@ export const NOTIFICATIONS = {
     infoIframeCheckFailedButEmbedding: 'Iframe compatibility could not be determined, trying to embed the URL anyway.',
     warningMixedContent: 'Mixed content detected, make sure to use only either HTTP or HTTPS for diffsite and the URLs.',
     warningUserSkippedIframeCheck: 'Iframe compatibility check was skipped.',
+    warningUsingIframeProxy: 'URL does not allow iframe embedding. Using proxy to display page, visual and functional differences may occur.',
     errorNoIframeEmbedding: 'URL does not allow iframe embedding.',
     errorUnreachableURL: 'URL can not be reached.'
 };
