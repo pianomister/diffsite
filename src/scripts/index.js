@@ -211,7 +211,7 @@ $ampDetectButton.addEventListener('click', function () {
         const value = isValidUrl($inputLeft.value) ? $inputLeft.value : $inputRight.value;
         const target = isValidUrl($inputLeft.value) ? $inputRight : $inputLeft;
 
-        getAlternativeURL(value, 'amp-html')
+        getAlternativeURL(value, 'amphtml')
             .then(url => {
                 target.value = url;
                 target.dispatchEvent(new Event('input'));
