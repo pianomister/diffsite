@@ -105,7 +105,7 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
         event.target.value = url;
 
         let iframeCheckResolve = null;
-        new Promise((resolve, reject) => {
+        new Promise((resolve, _reject) => {
             iframeCheckResolve = resolve;
             if (url.indexOf('localhost') !== -1) {
                 notification.set($notification, notification.types.info, NOTIFICATIONS.infoLocalhostDetected);
@@ -180,14 +180,14 @@ const processURLInput = function (event, $notification, $iframe, fallbackURL) {
                     setIframe();
                     break;
             }
-        })
+        });
 
         notification.set($notification, notification.types.loading, NOTIFICATIONS.infoCheckIsIframeable, LABELS.skip, () => {
             // User skipped iframe check
             iframeCheckResolve({
                 status: 999,
                 isIframeable: null
-            })
+            });
         });
     } else {
         notification.set($notification, notification.types.info, NOTIFICATIONS.infoInvalidURL);
@@ -217,7 +217,7 @@ $ampDetectButton.addEventListener('click', function () {
                 target.dispatchEvent(new Event('input'));
                 this.classList.remove('mode-switch--amp');
             })
-            .catch(error => {
+            .catch(_error => {
                 return getAlternativeURL(value, 'canonical');
             })
             .then(url => {
@@ -225,7 +225,7 @@ $ampDetectButton.addEventListener('click', function () {
                 target.dispatchEvent(new Event('input'));
                 this.classList.remove('mode-switch--amp');
             })
-            .catch(error => {
+            .catch(_error => {
                 this.classList.remove('mode-switch--amp');
                 alert('AMP or canonical pendant was not found.');
             });
@@ -248,7 +248,7 @@ document.getElementById('settings-toggle').addEventListener('click', (event) => 
 
 $settingsAboveTheFold.addEventListener('change', (event) => {
     const checked = event.target.checked;
-    document.getElementsByClassName('device-height-line').forEach((line) => line.classList.toggle('hidden', !checked));
+    Array.from(document.getElementsByClassName('device-height-line')).forEach((line) => line.classList.toggle('hidden', !checked));
     settings.set('showAboveTheFoldLine', checked);
 });
 
