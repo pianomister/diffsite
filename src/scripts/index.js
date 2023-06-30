@@ -329,29 +329,52 @@ const updateShiftValue = function ($target, cssVarKey) {
     $target.value = cssVar(cssVarKey);
 };
 
-document.getElementById('button-shift-up-left').addEventListener('click', () => {
-    cssVar('diff-site-shift-left', parseInt(cssVar('diff-site-shift-left'), 10) - 1);
-    updateShiftValue($shiftLeft, 'diff-site-shift-left');
-});
+let longPressIntervalInstance = null;
+let longPressTimeoutInstance = null;
 
-document.getElementById('button-shift-down-left').addEventListener('click', () => {
-    cssVar('diff-site-shift-left', parseInt(cssVar('diff-site-shift-left'), 10) + 1);
-    updateShiftValue($shiftLeft, 'diff-site-shift-left');
-});
+/**
+ * When the user presses and holds the shift button, the value keeps changing until
+ * the user releases the button.
+ * @param button to listen to
+ * @param cssVarName to change
+ * @param shiftElement to update
+ * @param diff increment or decrement by this value
+ */
+function handleSingleAndLongShiftButtonPress(button, cssVarName, shiftElement, diff ) {
+    function updateValue() {
+        cssVar(cssVarName, parseInt(cssVar(cssVarName), 10) + diff);
+        updateShiftValue(shiftElement, cssVarName);
+    }
 
-$shiftLeft.addEventListener('input', () => {
-    cssVar('diff-site-shift-left', parseInt($shiftLeft.value) || 0);
-});
+    button.addEventListener('click', () => updateValue());
 
-document.getElementById('button-shift-up-right').addEventListener('click', () => {
-    cssVar('diff-site-shift-right', parseInt(cssVar('diff-site-shift-right'), 10) - 1);
-    updateShiftValue($shiftRight, 'diff-site-shift-right');
-});
+    button.addEventListener('mousedown', () => {
+        clearInterval(longPressIntervalInstance);
+        clearTimeout(longPressTimeoutInstance);
 
-document.getElementById('button-shift-down-right').addEventListener('click', () => {
-    cssVar('diff-site-shift-right', parseInt(cssVar('diff-site-shift-right'), 10) + 1);
-    updateShiftValue($shiftRight, 'diff-site-shift-right');
-});
+        // wait a bit before starting to increment
+        longPressTimeoutInstance = setTimeout(() => {
+            longPressIntervalInstance = setInterval(() => updateValue());
+        }, 300);
+    });
+    button.addEventListener('mouseup', () => {
+        clearInterval(longPressIntervalInstance);
+        clearTimeout(longPressTimeoutInstance);
+    });
+}
+
+handleSingleAndLongShiftButtonPress(document.getElementById('button-shift-down-left'),
+    'diff-site-shift-left', $shiftLeft, +1
+);
+handleSingleAndLongShiftButtonPress(document.getElementById('button-shift-up-left'),
+    'diff-site-shift-left', $shiftLeft, -1
+);
+handleSingleAndLongShiftButtonPress(document.getElementById('button-shift-down-right'),
+    'diff-site-shift-right', $shiftRight, +1
+);
+handleSingleAndLongShiftButtonPress(document.getElementById('button-shift-up-right'),
+    'diff-site-shift-right', $shiftRight, -1
+);
 
 $shiftRight.addEventListener('input', () => {
     cssVar('diff-site-shift-right', parseInt($shiftRight.value) || 0);
