@@ -102,35 +102,35 @@ function DiffSettings ({
         </div>
         <div className="join">
           <input
-            style={ diffSettings.overlayMode === 'Swipe' && diffSettings.sideBySide ? btnStyles : {} }
+            style={ diffSettings.overlayMode === 'swipe' && diffSettings.sideBySide ? btnStyles : {} }
             className="join-item btn"
             type="radio"
             name="overlayMode"
             aria-label="Swipe"
-            value="Swipe"
-            checked={ diffSettings.overlayMode === 'Swipe'}
+            value="swipe"
+            checked={ diffSettings.overlayMode === 'swipe'}
             onClick={ handleDiffSettingsChange }
             disabled={ diffSettings.sideBySide }
           />
           <input
-            style={ diffSettings.overlayMode === 'Blend' && diffSettings.sideBySide ? btnStyles : {} }
+            style={ diffSettings.overlayMode === 'blend' && diffSettings.sideBySide ? btnStyles : {} }
             className="join-item btn"
             type="radio"
             name="overlayMode"
             aria-label="Blend"
-            value="Blend"
-            checked={ diffSettings.overlayMode === 'Blend'}
+            value="blend"
+            checked={ diffSettings.overlayMode === 'blend'}
             onClick={handleDiffSettingsChange}
             disabled={diffSettings.sideBySide}
           />
           <input
-            style={ diffSettings.overlayMode === 'Onion' && diffSettings.sideBySide ? btnStyles : {} }
+            style={ diffSettings.overlayMode === 'onion' && diffSettings.sideBySide ? btnStyles : {} }
             className="join-item btn"
             type="radio"
             name="overlayMode"
             aria-label="Onion"
-            value="Onion"
-            checked={ diffSettings.overlayMode === 'Onion'}
+            value="onion"
+            checked={ diffSettings.overlayMode === 'onion'}
             onClick={handleDiffSettingsChange}
             disabled={diffSettings.sideBySide}
           />
@@ -140,7 +140,7 @@ function DiffSettings ({
       {/* opacity for overlay options */}
       <div className="flex flex-col basis-56">
         <div className="label self-center">
-          <span className={`label-text text-base ${diffSettings.sideBySide ? 'text-gray-600' : ''}`}>Opacity</span>
+          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'text-gray-600' : ''}`}>Opacity</span>
         </div>
         <input
           name="opacity"
@@ -149,12 +149,12 @@ function DiffSettings ({
           max="1"
           value={diffSettings.opacity}
           step="0.01"
-          className={`range ${diffSettings.sideBySide ? '' : 'range-primary'}`}
+          className={`range ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? '' : 'range-primary'}`}
           onChange={handleDiffSettingsChange}
-          disabled={diffSettings.sideBySide}
+          disabled={diffSettings.sideBySide || diffSettings.overlayMode === 'swipe'}
         />
         <div className="label self-center">
-          <span className={`label-text text-base ${diffSettings.sideBySide ? 'text-gray-600' : ''}`}>{Math.floor(diffSettings.opacity * 100)}%</span>
+          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'text-gray-600' : ''}`}>{Math.floor(diffSettings.opacity * 100)}%</span>
         </div>
       </div>
 

@@ -1,1 +1,1 @@
-export const DEFAULT_IHEIGHT = 12000
+export const DEFAULT_IHEIGHT = 8200

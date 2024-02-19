@@ -1,4 +1,3 @@
-// import './App.css'
 import { useState } from 'react'
 import DiffInput from './components/DiffInput'
 import DiffSettings from './components/DiffSettings'
@@ -16,7 +15,7 @@ function App () {
     iHeight: DEFAULT_IHEIGHT,
     iWidth: 0,
     sideBySide: true,
-    overlayMode: 'Swipe',
+    overlayMode: 'swipe',
     opacity: 1
   })
 
@@ -57,8 +56,8 @@ function App () {
           {
             leftUrl: useDebounce(diffInput.leftUrl, 1000),
             rightUrl: useDebounce(diffInput.rightUrl, 1000),
-            iHeight: useDebounce(diffSettings.iHeight, 1000),
-            iWidth: diffSettings.iWidth
+            iHeightDebounce: useDebounce(diffSettings.iHeight, 1000),
+            ...diffSettings
           }
         }
         handleIHeightChange = { handleIHeightChange }

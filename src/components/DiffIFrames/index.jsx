@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { DEFAULT_IHEIGHT } from '../../utils'
+import './DiffIFrames.css'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 function DiffIFrames ({
@@ -7,43 +7,60 @@ function DiffIFrames ({
   handleIHeightChange
 }) {
   const [firstLoad, setFirstLoad] = useState(true)
-  const iFrameLeft = useRef(null)
-  const iFrameRight = useRef(null)
 
   useEffect(() => {
     if (!firstLoad) {
-      const value = parseInt(debounceInputs.iHeight)
+      const value = debounceInputs.iHeightDebounce
       if (isNaN(value) || value < 1500 || value > 20000) {
         handleIHeightChange(false)
-      } else {
-        iFrameRight.current.style.height = `${value}px`
-        iFrameLeft.current.style.height = `${value}px`
-        iFrameLeft.current.style.width = parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
-        iFrameRight.current.style.width = parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
       }
     } else {
       setFirstLoad(false)
     }
-  }, [debounceInputs.iHeight, debounceInputs.iWidth])
+  }, [debounceInputs.iHeightDebounce, debounceInputs.iWidth])
 
   return (
-    <section className='flex gap-x-6 justify-center'>
+    <section
+      className={`flex flex-row gap-x-6 relative ${!debounceInputs.sideBySide ? `dif-mode-overlay dif-mode-overlay--${debounceInputs.overlayMode}` : 'justify-center'}`}
+      style={{
+        height: `${debounceInputs.iHeightDebounce}px`
+      }}
+    >
       {/* left iframe */}
-      <div ref={iFrameLeft} className="mockup-browser border bg-base-300 w-full" style={{ height: `${DEFAULT_IHEIGHT}px` }}>
+      <div
+        className="mockup-browser border bg-base-300 w-full left-iframe overflow-hidden h-full"
+        style={{
+          width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`,
+          opacity: debounceInputs.sideBySide || debounceInputs.overlayMode === 'swipe' ? 1 : debounceInputs.opacity
+        }}
+      >
         <div className="mockup-browser-toolbar">
-          <div className="input">{ debounceInputs.leftUrl }</div>
+          <div className="input">{ debounceInputs.leftUrl } (First URL)</div>
         </div>
-        {/* <div className="flex justify-center px-4 py-16 bg-base-200">Hello!</div> */}
-        <iframe scrolling="no" src={ debounceInputs.leftUrl } name="myiFrame" className='w-full h-full overflow-hidden'></iframe>
+        <iframe
+          scrolling="no"
+          src={ debounceInputs.leftUrl }
+          name="leftIFrame"
+          className='w-full h-full pointer-events-none'
+        ></iframe>
       </div>
 
       {/* right iframe */}
-      <div ref={iFrameRight} className="mockup-browser border bg-base-300 w-full" style={{ height: `${DEFAULT_IHEIGHT}px` }}>
+      <div
+        className="mockup-browser border bg-base-300 w-full right-iframe overflow-hidden h-full"
+        style={{
+          width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
+        }}
+      >
         <div className="mockup-browser-toolbar">
-          <div className="input">{ debounceInputs.rightUrl }</div>
+          <div className="input">{ debounceInputs.rightUrl } (Second URL)</div>
         </div>
-        {/* <div className="flex justify-center px-4 py-16 bg-base-200">Hello!</div> */}
-        <iframe scrolling="no" src={ debounceInputs.rightUrl } name="myiFrame" className='w-full h-full overflow-hidden'></iframe>
+        <iframe
+          scrolling="no"
+          src={ debounceInputs.rightUrl }
+          name="rightIFrame"
+          className='w-full h-full pointer-events-none'
+        ></iframe>
       </div>
     </section>
   )

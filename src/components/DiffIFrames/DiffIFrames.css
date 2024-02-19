@@ -1,0 +1,25 @@
+:root {
+  --x-position: 50%
+}
+
+.dif-mode-overlay {
+  flex-direction: column;
+}
+
+.dif-mode-overlay .left-iframe {
+  position: absolute;
+  top: 0;
+  left: var(--x-position);
+  transform: translateX(calc(var(--x-position) * -1));
+  z-index: 5;
+}
+
+.dif-mode-overlay.dif-mode-overlay--blend .left-iframe {
+  mix-blend-mode: difference;
+}
+
+.dif-mode-overlay .right-iframe {
+  position: relative;
+  left: var(--x-position);
+  transform: translateX(calc(var(--x-position) * -1));
+}
