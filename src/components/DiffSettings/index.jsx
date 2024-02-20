@@ -13,7 +13,7 @@ function DiffSettings ({
   }
 
   return (
-    <section className='flex justify-center items-start gap-x-8 flex-wrap py-4 sticky top-0 z-10 bg-[#1D232A]'>
+    <section className='flex justify-center items-start gap-x-8 flex-wrap py-4 sticky top-0 z-20 bg-[#1D232A]'>
       {/* iframe height */}
       <label className="form-control min-w-56 max-w-xs">
         <div className="label self-center">

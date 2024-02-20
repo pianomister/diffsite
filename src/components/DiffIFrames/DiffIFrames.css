@@ -23,3 +23,19 @@
   left: var(--x-position);
   transform: translateX(calc(var(--x-position) * -1));
 }
+
+/* .swipe-handle {
+
+  position: absolute;
+  z-index: 10;
+  width: 30px;
+  opacity: 0.7;
+  cursor: ew-resize;
+} */
+
+/* .swipe-handle-line {
+  width: 3px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: red;
+} */
