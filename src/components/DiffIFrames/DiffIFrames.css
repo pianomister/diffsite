@@ -1,16 +1,7 @@
-:root {
-  --x-position: 50%
-}
-
-.dif-mode-overlay {
-  flex-direction: column;
-}
-
 .dif-mode-overlay .left-iframe {
   position: absolute;
   top: 0;
-  left: var(--x-position);
-  transform: translateX(calc(var(--x-position) * -1));
+  left: 0;
   z-index: 5;
 }
 
@@ -20,22 +11,5 @@
 
 .dif-mode-overlay .right-iframe {
   position: relative;
-  left: var(--x-position);
-  transform: translateX(calc(var(--x-position) * -1));
+  left: 0;
 }
-
-/* .swipe-handle {
-
-  position: absolute;
-  z-index: 10;
-  width: 30px;
-  opacity: 0.7;
-  cursor: ew-resize;
-} */
-
-/* .swipe-handle-line {
-  width: 3px;
-  height: 100%;
-  margin: 0 auto;
-  background-color: red;
-} */

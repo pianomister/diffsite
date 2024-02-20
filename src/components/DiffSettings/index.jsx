@@ -38,7 +38,7 @@ function DiffSettings ({
           value={diffSettings.iWidth}
           onChange={handleDiffSettingsChange}
         >
-          <option value="0" data-breakpoint="no-breakpoint">No specific breakpoint</option>
+          <option value="0" data-breakpoint="no-breakpoint">Full Width</option>
           <optgroup label="Classy Breakpoints">
             <option value="599" data-breakpoint="classy-mb">Classy Mobile</option>
             {/* <option value="900" data-breakpoint="classy-sm">Classy Small</option> */}
