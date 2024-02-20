@@ -13,7 +13,7 @@ function App () {
 
   const [diffSettings, setDiffSettings] = useState({
     iHeight: DEFAULT_IHEIGHT,
-    iWidth: 0,
+    iWidth: 0, // (window.innerWidth / 2) - 30,
     sideBySide: true,
     overlayMode: 'swipe',
     opacity: 1
@@ -43,7 +43,7 @@ function App () {
     }
   }
   return (
-    <>
+    <div className="flex flex-col gap-y-6 px-4">
       <DiffInput
         diffInput={diffInput}
         handleDiffInputChange={handleDiffInputChange}
@@ -62,7 +62,7 @@ function App () {
         }
         handleIHeightChange = { handleIHeightChange }
       />
-    </>
+    </div>
   )
 }
 

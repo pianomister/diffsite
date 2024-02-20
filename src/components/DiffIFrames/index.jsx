@@ -7,12 +7,9 @@ function DiffIFrames ({
   handleIHeightChange
 }) {
   const [firstLoad, setFirstLoad] = useState(true)
-  const [swiperPos, setSwiperPos] = useState((window.innerWidth - 32) / 2)
+  const [swiperPos, setSwiperPos] = useState(0)
   const prevIWidth = useRef(debounceInputs.iWidth)
-  const leftIframe = useRef(null)
-  const rightIframe = useRef(null)
   const iFramesContainer = useRef(null)
-  const swiperBlock = useRef(null)
   let eventStart = false
 
   useEffect(() => {
@@ -23,12 +20,17 @@ function DiffIFrames ({
       }
 
       if (prevIWidth.current !== debounceInputs.iWidth) {
-        setSwiperPos(iFramesContainer.current.getBoundingClientRect().width / 2)
+        setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+        prevIWidth.current = debounceInputs.iWidth
+      }
+
+      if (!debounceInputs.sideBySide && swiperPos === 0) {
+        setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
       }
     } else {
       setFirstLoad(false)
     }
-  }, [debounceInputs.iHeightDebounce, debounceInputs.iWidth])
+  }, [debounceInputs.iHeightDebounce, debounceInputs.iWidth, debounceInputs.sideBySide])
 
   const swipeHandleDown = (e) => {
     e.preventDefault()
@@ -69,8 +71,6 @@ function DiffIFrames ({
     window.removeEventListener('mouseup', swipeHandleUp)
   }
 
-  console.log(!debounceInputs.sideBySide, debounceInputs.overlayMode)
-
   return (
     <section
       className={`flex flex-row relative justify-center items-start ${!debounceInputs.sideBySide ? `dif-mode-overlay dif-mode-overlay--${debounceInputs.overlayMode}` : ''}`}
@@ -83,7 +83,6 @@ function DiffIFrames ({
         }}>
         {/* left iframe */}
         <div
-          ref={leftIframe}
           className="mockup-browser border bg-base-300 left-iframe overflow-hidden h-full"
           style={{
             opacity: debounceInputs.sideBySide || debounceInputs.overlayMode === 'swipe' ? 1 : debounceInputs.opacity,
@@ -93,7 +92,7 @@ function DiffIFrames ({
           <div
             className="mockup-browser-toolbar overflow-hidden"
             style={{
-              width: !debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe' ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : '100%'
+              width: (!debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe') ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`)
             }}
           >
             <div className="input">{ debounceInputs.leftUrl } (First URL)</div>
@@ -104,23 +103,22 @@ function DiffIFrames ({
             name="leftIFrame"
             className="h-full pointer-events-none overflow-hidden"
             style={{
-              width: !debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe' ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : '100%'
+              width: (!debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe') ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`)
             }}
           ></iframe>
         </div>
 
         {/* right iframe */}
         <div
-          ref={rightIframe}
           className="mockup-browser border bg-base-300 w-full right-iframe overflow-hidden h-full"
           style={{
-            width: !debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe' ? (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`) : '100%'
+            width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
           }}
         >
           <div
             className="mockup-browser-toolbar overflow-hidden"
             style={{
-              width: !debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe' ? parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px` : '100%'
+              width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
             }}
           >
             <div className="input">{ debounceInputs.rightUrl } (Second URL)</div>
@@ -131,14 +129,13 @@ function DiffIFrames ({
             name="rightIFrame"
             className="h-full pointer-events-none overflow-hidden"
             style={{
-              width: !debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe' ? parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px` : '100%'
+              width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
             }}
           ></iframe>
         </div>
 
         {/* swiper handle */}
         <div
-          ref={swiperBlock}
           className={`absolute z-10 w-8 opacity-70 cursor-ew-resize ${debounceInputs.sideBySide || debounceInputs.overlayMode !== 'swipe' ? 'hidden' : ''}`}
           onMouseDown={swipeHandleDown}
           style={{

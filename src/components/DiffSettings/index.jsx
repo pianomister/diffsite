@@ -1,3 +1,4 @@
+import './DiffSettings.css'
 import PropTypes from 'prop-types'
 import { BsLayoutSplit } from 'react-icons/bs'
 import { MdContentCopy } from 'react-icons/md'
@@ -38,7 +39,8 @@ function DiffSettings ({
           value={diffSettings.iWidth}
           onChange={handleDiffSettingsChange}
         >
-          <option value="0" data-breakpoint="no-breakpoint">Full Width</option>
+          {/* {diffSettings.sideBySide ? (window.innerWidth / 2) - 28 : window.innerWidth - 32} */}
+          <option value="0" data-breakpoint="full-width">Full Width</option>
           <optgroup label="Classy Breakpoints">
             <option value="599" data-breakpoint="classy-mb">Classy Mobile</option>
             {/* <option value="900" data-breakpoint="classy-sm">Classy Small</option> */}
@@ -78,7 +80,7 @@ function DiffSettings ({
           />
           <div className="swap-on">
             <div className="flex flex-col items-center">
-              <IconContext.Provider value={{ className: 'text-4xl' }}>
+              <IconContext.Provider value={{ className: 'text-4xl text-info' }}>
                 <BsLayoutSplit aria-hidden />
               </IconContext.Provider>
               <span className="label-text text-base">Side By Side</span>
@@ -86,7 +88,7 @@ function DiffSettings ({
           </div>
           <div className="swap-off">
             <div className="flex flex-col items-center">
-              <IconContext.Provider value={{ className: 'text-4xl' }}>
+              <IconContext.Provider value={{ className: 'text-4xl text-info' }}>
                 <MdContentCopy aria-hidden />
               </IconContext.Provider>
               <span className="label-text text-base">Overlay</span>
@@ -103,7 +105,7 @@ function DiffSettings ({
         <div className="join">
           <input
             style={ diffSettings.overlayMode === 'swipe' && diffSettings.sideBySide ? btnStyles : {} }
-            className="join-item btn"
+            className="join-item btn custom-radio"
             type="radio"
             name="overlayMode"
             aria-label="Swipe"
@@ -114,7 +116,7 @@ function DiffSettings ({
           />
           <input
             style={ diffSettings.overlayMode === 'blend' && diffSettings.sideBySide ? btnStyles : {} }
-            className="join-item btn"
+            className="join-item btn custom-radio"
             type="radio"
             name="overlayMode"
             aria-label="Blend"
@@ -125,7 +127,7 @@ function DiffSettings ({
           />
           <input
             style={ diffSettings.overlayMode === 'onion' && diffSettings.sideBySide ? btnStyles : {} }
-            className="join-item btn"
+            className="join-item btn custom-radio"
             type="radio"
             name="overlayMode"
             aria-label="Onion"
@@ -149,7 +151,7 @@ function DiffSettings ({
           max="1"
           value={diffSettings.opacity}
           step="0.01"
-          className={`range ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? '' : 'range-primary'}`}
+          className={`range ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? '' : 'range-info'}`}
           onChange={handleDiffSettingsChange}
           disabled={diffSettings.sideBySide || diffSettings.overlayMode === 'swipe'}
         />
