@@ -39,7 +39,6 @@ function DiffSettings ({
           value={diffSettings.iWidth}
           onChange={handleDiffSettingsChange}
         >
-          {/* {diffSettings.sideBySide ? (window.innerWidth / 2) - 28 : window.innerWidth - 32} */}
           <option value="0" data-breakpoint="full-width">Full Width</option>
           <optgroup label="Classy Breakpoints">
             <option value="599" data-breakpoint="classy-mb">Classy Mobile</option>
