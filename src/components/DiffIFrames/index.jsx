@@ -1,6 +1,8 @@
 import './DiffIFrames.css'
 import { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { TbSquareNumber1, TbSquareNumber2 } from 'react-icons/tb'
+import { IconContext } from 'react-icons'
 
 function DiffIFrames ({
   debounceInputs,
@@ -11,7 +13,7 @@ function DiffIFrames ({
   const [swiperPos, setSwiperPos] = useState(() => {
     return debounceInputs.iWidth === 0 ? window.innerWidth / 2 : debounceInputs.iWidth / 2
   })
-  const prevIWidth = useRef(debounceInputs.iWidth)
+  // const prevIWidth = useRef(debounceInputs.iWidth)
   const iFramesContainer = useRef(null)
   let eventStart = false
 
@@ -21,28 +23,28 @@ function DiffIFrames ({
       if (isNaN(value) || value < 1500 || value > 20000) {
         handleIHeightChange(false)
       }
-      if (prevIWidth.current !== debounceInputs.iWidth) {
-        setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
-        prevIWidth.current = debounceInputs.iWidth
-      }
+      // if (prevIWidth.current !== debounceInputs.iWidth) {
+      //   setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+      //   prevIWidth.current = debounceInputs.iWidth
+      // }
 
-      if (!debounceInputs.sideBySide && swiperPos === 0) {
-        setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
-      }
+      // if (!debounceInputs.sideBySide && swiperPos === 0) {
+      //   setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+      // }
     } else {
       setFirstLoad(false)
     }
-  }, [debounceInputs.iHeightDebounce, debounceInputs.iWidth, debounceInputs.sideBySide])
+  }, [debounceInputs.iHeightDebounce]) // , debounceInputs.iWidth, debounceInputs.sideBySide
 
-  // useEffect(() => {
-  //   setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
-  // }, [debounceInputs.iWidth])
+  useEffect(() => {
+    setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+  }, [debounceInputs.iWidth])
 
-  // useEffect(() => {
-  //   if (!debounceInputs.sideBySide && swiperPos === 0) {
-  //     setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
-  //   }
-  // }, [debounceInputs.sideBySide])
+  useEffect(() => {
+    if (!debounceInputs.sideBySide && swiperPos === 0) {
+      setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+    }
+  }, [debounceInputs.sideBySide])
 
   const swipeHandleDown = (e) => {
     e.preventDefault()
@@ -107,7 +109,10 @@ function DiffIFrames ({
               width: (!debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe') ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`)
             }}
           >
-            <div className="input">{ debounceInputs.leftUrl } (First URL)</div>
+            <div className="input">{ debounceInputs.leftUrl }</div>
+            <IconContext.Provider value={{ className: 'text-3xl' }}>
+              <TbSquareNumber1 />
+            </IconContext.Provider>
           </div>
           <iframe
             scrolling="no"
@@ -134,7 +139,10 @@ function DiffIFrames ({
               width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
             }}
           >
-            <div className="input">{ debounceInputs.rightUrl } (Second URL)</div>
+            <div className="input">{ debounceInputs.rightUrl } </div>
+            <IconContext.Provider value={{ className: 'text-3xl' }}>
+              <TbSquareNumber2 />
+            </IconContext.Provider>
           </div>
           <iframe
             scrolling="no"
