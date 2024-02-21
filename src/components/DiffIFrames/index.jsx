@@ -4,10 +4,13 @@ import PropTypes from 'prop-types'
 
 function DiffIFrames ({
   debounceInputs,
-  handleIHeightChange
+  handleIHeightChange,
+  handleIFramesLoad
 }) {
   const [firstLoad, setFirstLoad] = useState(true)
-  const [swiperPos, setSwiperPos] = useState(0)
+  const [swiperPos, setSwiperPos] = useState(() => {
+    return debounceInputs.iWidth === 0 ? window.innerWidth / 2 : debounceInputs.iWidth / 2
+  })
   const prevIWidth = useRef(debounceInputs.iWidth)
   const iFramesContainer = useRef(null)
   let eventStart = false
@@ -18,7 +21,6 @@ function DiffIFrames ({
       if (isNaN(value) || value < 1500 || value > 20000) {
         handleIHeightChange(false)
       }
-
       if (prevIWidth.current !== debounceInputs.iWidth) {
         setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
         prevIWidth.current = debounceInputs.iWidth
@@ -31,6 +33,16 @@ function DiffIFrames ({
       setFirstLoad(false)
     }
   }, [debounceInputs.iHeightDebounce, debounceInputs.iWidth, debounceInputs.sideBySide])
+
+  // useEffect(() => {
+  //   setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+  // }, [debounceInputs.iWidth])
+
+  // useEffect(() => {
+  //   if (!debounceInputs.sideBySide && swiperPos === 0) {
+  //     setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)
+  //   }
+  // }, [debounceInputs.sideBySide])
 
   const swipeHandleDown = (e) => {
     e.preventDefault()
@@ -101,6 +113,7 @@ function DiffIFrames ({
             scrolling="no"
             src={ debounceInputs.leftUrl }
             name="leftIFrame"
+            onLoad={() => handleIFramesLoad('leftIFrame', true)}
             className="h-full pointer-events-none overflow-hidden"
             style={{
               width: (!debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe') ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`)
@@ -127,6 +140,7 @@ function DiffIFrames ({
             scrolling="no"
             src={ debounceInputs.rightUrl }
             name="rightIFrame"
+            onLoad={() => handleIFramesLoad('rightIFrame', true)}
             className="h-full pointer-events-none overflow-hidden"
             style={{
               width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
@@ -152,7 +166,8 @@ function DiffIFrames ({
 
 DiffIFrames.propTypes = {
   debounceInputs: PropTypes.object.isRequired,
-  handleIHeightChange: PropTypes.func.isRequired
+  handleIHeightChange: PropTypes.func.isRequired,
+  handleIFramesLoad: PropTypes.func.isRequired
 }
 
 export default DiffIFrames

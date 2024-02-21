@@ -111,7 +111,7 @@ function DiffSettings ({
             aria-label="Swipe"
             value="swipe"
             checked={ diffSettings.overlayMode === 'swipe'}
-            onClick={ handleDiffSettingsChange }
+            onChange={ handleDiffSettingsChange }
             disabled={ diffSettings.sideBySide }
           />
           <input
@@ -122,7 +122,7 @@ function DiffSettings ({
             aria-label="Blend"
             value="blend"
             checked={ diffSettings.overlayMode === 'blend'}
-            onClick={handleDiffSettingsChange}
+            onChange={handleDiffSettingsChange}
             disabled={diffSettings.sideBySide}
           />
           <input
@@ -133,7 +133,7 @@ function DiffSettings ({
             aria-label="Onion"
             value="onion"
             checked={ diffSettings.overlayMode === 'onion'}
-            onClick={handleDiffSettingsChange}
+            onChange={handleDiffSettingsChange}
             disabled={diffSettings.sideBySide}
           />
         </div>

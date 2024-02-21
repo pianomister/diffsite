@@ -6,51 +6,85 @@ import { useDebounce } from './hooks/useDebounce'
 import { DEFAULT_IHEIGHT } from './utils'
 
 function App () {
-  const [diffInput, setDiffInput] = useState({
-    leftUrl: 'https://www.bankrate.com',
-    rightUrl: 'https://www.bankrate.com'
-  })
+  const [diffInput, setDiffInput] = useState(
+    () => {
+      const diffInputLS = window.localStorage.getItem('diffInputLS')
+      return diffInputLS !== null ? JSON.parse(diffInputLS) : { leftUrl: '', rightUrl: '' }
+    }
+  )
 
-  const [diffSettings, setDiffSettings] = useState({
-    iHeight: DEFAULT_IHEIGHT,
-    iWidth: 0, // (window.innerWidth / 2) - 30,
-    sideBySide: true,
-    overlayMode: 'swipe',
-    opacity: 1
-  })
+  const [iFramesLoaded, setIframesLoaded] = useState(
+    () => {
+      const diffInputLS = window.localStorage.getItem('diffInputLS')
+      if (diffInputLS !== null) {
+        const diffInputParsed = JSON.parse(diffInputLS)
+        return { leftIFrame: diffInputParsed.leftUrl === '', rightIFrame: diffInputParsed.rightUrl === '' }
+      }
+
+      return { leftIFrame: true, rightIFrame: true }
+    }
+  )
+
+  const [diffSettings, setDiffSettings] = useState(
+    () => {
+      const diffSettingsLS = window.localStorage.getItem('diffSettingsLS')
+      return diffSettingsLS !== null
+        ? JSON.parse(diffSettingsLS)
+        : {
+            iHeight: DEFAULT_IHEIGHT,
+            iWidth: 0, // (window.innerWidth / 2) - 30,
+            sideBySide: true,
+            overlayMode: 'swipe',
+            opacity: 1
+          }
+    }
+  )
 
   const handleDiffInputChange = (e) => {
-    setDiffInput({
+    const diffInputChanged = {
       ...diffInput,
       [e.target.name]: e.target.value
-    })
+    }
+    setDiffInput(diffInputChanged)
+    window.localStorage.setItem('diffInputLS', JSON.stringify(diffInputChanged))
   }
 
   const handleDiffSettingsChange = (e) => {
-    setDiffSettings({
+    const diffSettingsChanged = {
       ...diffSettings,
       [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
     }
-    )
+    setDiffSettings(diffSettingsChanged)
+    window.localStorage.setItem('diffSettingsLS', JSON.stringify(diffSettingsChanged))
   }
 
   const handleIHeightChange = (isValid) => {
     if (!isValid) {
-      setDiffSettings({
+      const iHeightChanged = {
         ...diffSettings,
         iHeight: DEFAULT_IHEIGHT
-      })
+      }
+
+      setDiffSettings(iHeightChanged)
+      window.localStorage.setItem('diffSettingsLS', JSON.stringify(iHeightChanged))
     }
   }
+
+  const handleIFramesLoad = (iframeId, hasLoaded) => {
+    setIframesLoaded({ ...iFramesLoaded, [iframeId]: hasLoaded })
+  }
+
   return (
-    <div className="flex flex-col gap-y-6 px-4">
+    <div className="flex flex-col gap-y-6 px-4 py-4">
       <DiffInput
-        diffInput={diffInput}
-        handleDiffInputChange={handleDiffInputChange}
+        diffInput={ diffInput }
+        handleDiffInputChange={ handleDiffInputChange }
+        iFramesLoaded={ iFramesLoaded }
+        handleIFramesLoad = { handleIFramesLoad }
       />
       <DiffSettings
         diffSettings={diffSettings}
-        handleDiffSettingsChange={handleDiffSettingsChange}
+        handleDiffSettingsChange={ handleDiffSettingsChange }
       />
       <DiffIFrames debounceInputs= {
           {
@@ -61,6 +95,7 @@ function App () {
           }
         }
         handleIHeightChange = { handleIHeightChange }
+        handleIFramesLoad = { handleIFramesLoad }
       />
     </div>
   )

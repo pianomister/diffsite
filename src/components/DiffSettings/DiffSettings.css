@@ -3,6 +3,11 @@
   border-color: oklch(var(--in));
 }
 
+.join-item.btn.custom-radio:checked:hover {
+  background-color: #109DE4;
+  border-color: #109DE4;
+}
+
 .join-item.btn.custom-radio:checked:disabled {
   background-color: slategrey;
   border-color: slategrey;
