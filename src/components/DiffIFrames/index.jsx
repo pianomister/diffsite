@@ -134,8 +134,8 @@ function DiffIFrames ({
               width: (!debounceInputs.sideBySide && debounceInputs.overlayMode === 'swipe') ? (parseInt(debounceInputs.iWidth) === 0 ? 'calc(100vw - 50px)' : `${debounceInputs.iWidth}px`) : (parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`)
             }}
           >
-            <div className="input input--flat justify-start items-center gap-x-2">
-              { !iFramesLoaded.leftIFrame && <span className="loading loading-spinner loading-sm"></span> }
+            <div className={`input input--flat justify-start items-center gap-x-2 ${debounceInputs.leftUrl && !leftUrlValidated ? 'input-error' : ''}`}>
+              { !iFramesLoaded.leftIFrame && <span className="loading loading-spinner loading-sm -ml-1"></span> }
               { iFramesLoaded.leftIFrame &&
                 <span>
                   <IconContext.Provider value={{
@@ -176,8 +176,8 @@ function DiffIFrames ({
               width: parseInt(debounceInputs.iWidth) === 0 ? '100%' : `${debounceInputs.iWidth}px`
             }}
           >
-            <div className="input input--flat justify-start items-center gap-x-2">
-              { !iFramesLoaded.rightIFrame && <span className="loading loading-spinner loading-sm"></span> }
+            <div className={`input input--flat justify-start items-center gap-x-2 ${debounceInputs.rightUrl && !rightUrlValidated ? 'input-error' : ''}`}>
+              { !iFramesLoaded.rightIFrame && <span className="loading loading-spinner loading-sm -ml-1"></span> }
               { iFramesLoaded.rightIFrame &&
                 <span>
                   <IconContext.Provider value={{
