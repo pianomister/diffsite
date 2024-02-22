@@ -14,3 +14,13 @@
   top: 0;
   left: 0;
 }
+
+.mockup-browser .mockup-browser-toolbar .input.input--flat {
+  padding-left: 0.5rem;
+  display: flex;
+}
+
+.mockup-browser-toolbar .input.input--flat::before,
+.mockup-browser-toolbar .input.input--flat::after {
+  display: none;
+}

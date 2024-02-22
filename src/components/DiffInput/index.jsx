@@ -2,9 +2,7 @@ import PropTypes from 'prop-types'
 
 function DiffInput ({
   diffInput,
-  handleDiffInputChange,
-  iFramesLoaded,
-  handleIFramesLoad
+  handleDiffInputChange
 }) {
   return (
     <section className="flex flex-col w-full lg:flex-row">
@@ -16,17 +14,9 @@ function DiffInput ({
               placeholder="Website URL"
               name="leftUrl"
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) => {
-                if (e.target.value.trim() !== '') {
-                  handleIFramesLoad('leftIFrame', false)
-                } else {
-                  handleIFramesLoad('leftIFrame', true)
-                }
-                handleDiffInputChange(e)
-              }}
+              onChange={handleDiffInputChange}
               value={diffInput.leftUrl}
             />
-            <span className={`${iFramesLoaded.leftIFrame ? 'invisible' : 'visible'} loading loading-spinner text-info`}></span>
           </div>
           <div className="label pb-0">
             <span className="label-text text-base">First URL</span>
@@ -47,17 +37,9 @@ function DiffInput ({
               placeholder="Another Website URL"
               name="rightUrl"
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) => {
-                if (e.target.value.trim() !== '') {
-                  handleIFramesLoad('rightIFrame', false)
-                } else {
-                  handleIFramesLoad('rightIFrame', true)
-                }
-                handleDiffInputChange(e)
-              }}
+              onChange={handleDiffInputChange}
               value={diffInput.rightUrl}
             />
-            <span className={`${iFramesLoaded.rightIFrame ? 'invisible' : 'visible'} loading loading-spinner text-info`}></span>
           </div>
           <div className="label pb-0">
             <span className="label-text text-base">Second URL</span>
@@ -69,9 +51,7 @@ function DiffInput ({
 }
 DiffInput.propTypes = {
   diffInput: PropTypes.object.isRequired,
-  handleDiffInputChange: PropTypes.func.isRequired,
-  iFramesLoaded: PropTypes.object.isRequired,
-  handleIFramesLoad: PropTypes.func.isRequired
+  handleDiffInputChange: PropTypes.func.isRequired
 }
 
 export default DiffInput

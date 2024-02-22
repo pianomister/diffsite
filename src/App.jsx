@@ -13,18 +13,6 @@ function App () {
     }
   )
 
-  const [iFramesLoaded, setIframesLoaded] = useState(
-    () => {
-      const diffInputLS = window.localStorage.getItem('diffInputLS')
-      if (diffInputLS !== null) {
-        const diffInputParsed = JSON.parse(diffInputLS)
-        return { leftIFrame: diffInputParsed.leftUrl === '', rightIFrame: diffInputParsed.rightUrl === '' }
-      }
-
-      return { leftIFrame: true, rightIFrame: true }
-    }
-  )
-
   const [diffSettings, setDiffSettings] = useState(
     () => {
       const diffSettingsLS = window.localStorage.getItem('diffSettingsLS')
@@ -70,17 +58,11 @@ function App () {
     }
   }
 
-  const handleIFramesLoad = (iframeId, hasLoaded) => {
-    setIframesLoaded({ ...iFramesLoaded, [iframeId]: hasLoaded })
-  }
-
   return (
     <div className="flex flex-col gap-y-6 px-4 py-4">
       <DiffInput
         diffInput={ diffInput }
         handleDiffInputChange={ handleDiffInputChange }
-        iFramesLoaded={ iFramesLoaded }
-        handleIFramesLoad = { handleIFramesLoad }
       />
       <DiffSettings
         diffSettings={diffSettings}
@@ -95,7 +77,6 @@ function App () {
           }
         }
         handleIHeightChange = { handleIHeightChange }
-        handleIFramesLoad = { handleIFramesLoad }
       />
     </div>
   )
