@@ -48,7 +48,6 @@ function App () {
   }
 
   const handleBreakPointChange = () => {
-    console.log(diffSettings)
     if (diffSettings.sideBySide) {
       const diffSettingsChanged = {
         ...diffSettings,
@@ -72,7 +71,7 @@ function App () {
   }
 
   return (
-    <div className="flex flex-col gap-y-6 px-4 py-4">
+    <div className="flex flex-col gap-y-6 p-4">
       <Navbar />
       <DiffInput
         diffInput={ diffInput }

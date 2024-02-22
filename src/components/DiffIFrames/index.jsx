@@ -31,7 +31,7 @@ function DiffIFrames ({
     const value = debounceInputs.iHeightDebounce
     if (isNaN(value) || value < 1500 || value > 20000) {
       handleIHeightChange(false)
-      return false
+      return
     }
 
     setSwiperPos(parseInt(debounceInputs.iWidth) === 0 ? iFramesContainer.current.getBoundingClientRect().width / 2 : parseInt(debounceInputs.iWidth) / 2)

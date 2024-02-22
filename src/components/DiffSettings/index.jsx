@@ -1,4 +1,3 @@
-import './DiffSettings.css'
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { BsLayoutSplit } from 'react-icons/bs'
@@ -38,7 +37,6 @@ function DiffSettings ({
   }, [])
 
   useEffect(() => {
-    console.log(isLgView)
     const { width } = document.documentElement.getBoundingClientRect()
     if (!isLgView && width <= 1007 && diffSettings.sideBySide) {
       handleBreakPointChange()
@@ -46,7 +44,7 @@ function DiffSettings ({
   }, [isLgView])
 
   return (
-    <section className='flex justify-center items-start gap-x-8 flex-wrap py-4 sticky top-0 z-20 bg-base-300 rounded-box'>
+    <section className='flex flex-col items-center gap-y-6 sm:flex-row justify-center sm:items-start gap-x-8 flex-wrap p-4 sticky top-0 z-20 bg-base-300 rounded-box'>
       {/* iframe height */}
       <label className="form-control min-w-56 max-w-xs">
         <div className="label self-center">
@@ -97,7 +95,7 @@ function DiffSettings ({
       </label>
 
       {/* compare mode */}
-      <div className="flex flex-col">
+      <div className="hidden sm:flex flex-col">
         <div className="label self-center">
           <span className={`label-text text-base ${!isLgView && 'disabled-text'}`}>Comparison mode</span>
         </div>
@@ -172,7 +170,7 @@ function DiffSettings ({
       </div>
 
       {/* opacity for overlay options */}
-      <div className="flex flex-col basis-56">
+      <div className="flex flex-col w-56">
         <div className="label self-center">
           <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'disabled-text' : ''}`}>Opacity</span>
         </div>
