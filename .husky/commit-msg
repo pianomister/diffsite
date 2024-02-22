@@ -1,2 +1,4 @@
+# ./node_modules/.bin/commitlint --edit "$1"
 # npx commitlint --edit "$1"
-./node_modules/.bin/commitlint --edit "$1"
+npm run lint:commit "$1"
+

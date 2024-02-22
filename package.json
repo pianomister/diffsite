@@ -10,7 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0 --format=codeframe .",
     "preview": "vite preview",
     "prepare": "husky",
-    "prepare:config": "npx husky init"
+    "prepare:config": "npx husky init",
+    "lint:commit": "commitlint --edit"
   },
   "dependencies": {
     "react": "^18.2.0",
