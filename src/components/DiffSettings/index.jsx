@@ -1,4 +1,5 @@
 import './DiffSettings.css'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { BsLayoutSplit } from 'react-icons/bs'
 import { MdContentCopy } from 'react-icons/md'
@@ -6,15 +7,46 @@ import { IconContext } from 'react-icons'
 
 function DiffSettings ({
   diffSettings,
-  handleDiffSettingsChange
+  handleDiffSettingsChange,
+  handleBreakPointChange
 }) {
+  const [isLgView, setIsLgView] = useState(true)
   const btnStyles = {
     backgroundColor: 'slategrey',
     borderColor: 'slategrey'
   }
 
+  const resizeObserver = new ResizeObserver((entries) => {
+    const { width } = entries[0].contentRect
+    if (width <= 1007) {
+      setIsLgView(false)
+    } else {
+      setIsLgView(true)
+    }
+  })
+
+  useEffect(() => {
+    const { width } = document.documentElement.getBoundingClientRect()
+    if (width <= 1007) {
+      setIsLgView(false)
+    }
+    resizeObserver.observe(document.documentElement)
+
+    return () => {
+      resizeObserver.unobserve(document.documentElement)
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log(isLgView)
+    const { width } = document.documentElement.getBoundingClientRect()
+    if (!isLgView && width <= 1007 && diffSettings.sideBySide) {
+      handleBreakPointChange()
+    }
+  }, [isLgView])
+
   return (
-    <section className='flex justify-center items-start gap-x-8 flex-wrap py-4 sticky top-0 z-20 bg-[#1D232A]'>
+    <section className='flex justify-center items-start gap-x-8 flex-wrap py-4 sticky top-0 z-20 bg-base-300 rounded-box'>
       {/* iframe height */}
       <label className="form-control min-w-56 max-w-xs">
         <div className="label self-center">
@@ -67,7 +99,7 @@ function DiffSettings ({
       {/* compare mode */}
       <div className="flex flex-col">
         <div className="label self-center">
-          <span className="label-text text-base">Comparison mode</span>
+          <span className={`label-text text-base ${!isLgView && 'disabled-text'}`}>Comparison mode</span>
         </div>
         <label className="swap swap-flip">
           {/* this hidden checkbox controls the state */}
@@ -76,21 +108,22 @@ function DiffSettings ({
             name="sideBySide"
             checked={diffSettings.sideBySide}
             onChange={handleDiffSettingsChange}
+            disabled={!isLgView}
           />
           <div className="swap-on">
             <div className="flex flex-col items-center">
-              <IconContext.Provider value={{ className: 'text-4xl text-info' }}>
+              <IconContext.Provider value={{ className: `text-4xl ${isLgView ? 'text-primary' : 'text-slategrey'}` }}>
                 <BsLayoutSplit aria-hidden />
               </IconContext.Provider>
-              <span className="label-text text-base">Side By Side</span>
+              <span className={`label-text text-base ${!isLgView && 'disabled-text'}`}>Side By Side</span>
             </div>
           </div>
           <div className="swap-off">
             <div className="flex flex-col items-center">
-              <IconContext.Provider value={{ className: 'text-4xl text-info' }}>
+              <IconContext.Provider value={{ className: `text-4xl ${isLgView ? 'text-primary' : 'text-slategrey'}` }}>
                 <MdContentCopy aria-hidden />
               </IconContext.Provider>
-              <span className="label-text text-base">Overlay</span>
+              <span className={`label-text text-base ${!isLgView && 'disabled-text'}`}>Overlay</span>
             </div>
           </div>
         </label>
@@ -99,7 +132,7 @@ function DiffSettings ({
       {/* overlay options */}
       <div className="flex flex-col">
         <div className="label self-center">
-          <span className={`label-text text-base ${diffSettings.sideBySide ? 'text-gray-600' : ''}`}>Overlay mode</span>
+          <span className={`label-text text-base ${diffSettings.sideBySide ? 'disabled-text' : ''}`}>Overlay mode</span>
         </div>
         <div className="join">
           <input
@@ -141,7 +174,7 @@ function DiffSettings ({
       {/* opacity for overlay options */}
       <div className="flex flex-col basis-56">
         <div className="label self-center">
-          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'text-gray-600' : ''}`}>Opacity</span>
+          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'disabled-text' : ''}`}>Opacity</span>
         </div>
         <input
           name="opacity"
@@ -150,12 +183,12 @@ function DiffSettings ({
           max="1"
           value={diffSettings.opacity}
           step="0.01"
-          className={`range ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? '' : 'range-info'}`}
+          className={`range ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? '' : 'range-primary'}`}
           onChange={handleDiffSettingsChange}
           disabled={diffSettings.sideBySide || diffSettings.overlayMode === 'swipe'}
         />
         <div className="label self-center">
-          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'text-gray-600' : ''}`}>{Math.floor(diffSettings.opacity * 100)}%</span>
+          <span className={`label-text text-base ${diffSettings.sideBySide || diffSettings.overlayMode === 'swipe' ? 'disabled-text' : ''}`}>{Math.floor(diffSettings.opacity * 100)}%</span>
         </div>
       </div>
 
@@ -165,6 +198,7 @@ function DiffSettings ({
 
 DiffSettings.propTypes = {
   diffSettings: PropTypes.object.isRequired,
-  handleDiffSettingsChange: PropTypes.func.isRequired
+  handleDiffSettingsChange: PropTypes.func.isRequired,
+  handleBreakPointChange: PropTypes.func.isRequired
 }
 export default DiffSettings

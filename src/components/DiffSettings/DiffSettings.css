@@ -1,4 +1,4 @@
-.join-item.btn.custom-radio:checked {
+/* .join-item.btn.custom-radio:checked {
   background-color: oklch(var(--in));
   border-color: oklch(var(--in));
 }
@@ -11,4 +11,4 @@
 .join-item.btn.custom-radio:checked:disabled {
   background-color: slategrey;
   border-color: slategrey;
-}
+} */

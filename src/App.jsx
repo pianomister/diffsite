@@ -2,6 +2,7 @@ import { useState } from 'react'
 import DiffInput from './components/DiffInput'
 import DiffSettings from './components/DiffSettings'
 import DiffIFrames from './components/DiffIFrames'
+import Navbar from './components/Navbar'
 import { useDebounce } from './hooks/useDebounce'
 import { DEFAULT_IHEIGHT } from './utils'
 
@@ -46,6 +47,18 @@ function App () {
     window.localStorage.setItem('diffSettingsLS', JSON.stringify(diffSettingsChanged))
   }
 
+  const handleBreakPointChange = () => {
+    console.log(diffSettings)
+    if (diffSettings.sideBySide) {
+      const diffSettingsChanged = {
+        ...diffSettings,
+        sideBySide: false
+      }
+      setDiffSettings((prevValue) => ({ ...prevValue, sideBySide: false }))
+      window.localStorage.setItem('diffSettingsLS', JSON.stringify(diffSettingsChanged))
+    }
+  }
+
   const handleIHeightChange = (isValid) => {
     if (!isValid) {
       const iHeightChanged = {
@@ -60,6 +73,7 @@ function App () {
 
   return (
     <div className="flex flex-col gap-y-6 px-4 py-4">
+      <Navbar />
       <DiffInput
         diffInput={ diffInput }
         handleDiffInputChange={ handleDiffInputChange }
@@ -67,6 +81,7 @@ function App () {
       <DiffSettings
         diffSettings={diffSettings}
         handleDiffSettingsChange={ handleDiffSettingsChange }
+        handleBreakPointChange={ handleBreakPointChange }
       />
       <DiffIFrames debounceInputs= {
           {
@@ -76,7 +91,7 @@ function App () {
             ...diffSettings
           }
         }
-        handleIHeightChange = { handleIHeightChange }
+        handleIHeightChange= { handleIHeightChange }
       />
     </div>
   )

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mockup-browser .mockup-browser-toolbar .input.input--flat {
+  padding-left: 0.5rem;
+  display: flex;
+  /* background-color: #2a323a; */
+  @apply bg-base-100
+}
+
+.disabled-text
+{
+  color: var(--fallback-bc, oklch(var(--bc) / .4));
+}

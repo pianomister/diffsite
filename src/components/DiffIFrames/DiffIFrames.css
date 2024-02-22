@@ -15,12 +15,6 @@
   left: 0;
 }
 
-.mockup-browser .mockup-browser-toolbar .input.input--flat {
-  padding-left: 0.5rem;
-  display: flex;
-  background-color: #2a323a;
-}
-
 .mockup-browser-toolbar .input.input--flat::before,
 .mockup-browser-toolbar .input.input--flat::after {
   display: none;
