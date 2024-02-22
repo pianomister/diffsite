@@ -1,6 +1,6 @@
 export const DEFAULT_IHEIGHT = 8200
 export const MIN_IHEIGHT = 1500
-export const MAX_IHEIGHT = 20000
+export const MAX_IHEIGHT = 25000
 
 export function isValidUrl (url) {
   if (!url) return ''
