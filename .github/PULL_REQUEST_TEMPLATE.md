@@ -16,7 +16,6 @@ _For visual updates, screenshots are helpful_
 - [ ] A teammate has performed a review prior to asking BSE team
 - [ ] Supporting tests included
 - [ ] Documentation updated as appropriate
-- [ ] Added the `no-ephemeral-env` label when not needed
 
 ## What Does the BST Team Look For
 
